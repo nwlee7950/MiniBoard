@@ -9,13 +9,13 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class Board {
-    long id;
-    String userId;
-    String title;
-    String content;
-    long hits;
-    String date;
-    boolean isNotice;
+    private long id;
+    private String userId;
+    private String title;
+    private String content;
+    private long hits;
+    private String date;
+    private boolean isNotice;
 
     @Builder
     Board(long id, String userId, String title, String content, long hits, String date, boolean isNotice){

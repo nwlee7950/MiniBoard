@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toyproject.miniboard.model.mapper.BoardMapper">
+
+    <insert id="insertBoard" parameterType="BoardDto">
+        insert into board (user_id, title, content, date, is_notice)
+        values (#{userId}, #{title}, #{content}, now(),  #{isNotice})
+    </insert>
+
+    <update id="updateBoard" parameterType="BoardDto">
+        update board
+        set title   = #{title},
+            content = #{content},
+            is_notice  = ${isNotice}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBoard" parameterType="long">
+        delete
+        from board
+        where id = #{id}
+    </delete>
+
+    <update id="updatehits" parameterType="long">
+        update board
+        set hits = hits + 1
+        where id = #{id}
+    </update>
+
+</mapper>
