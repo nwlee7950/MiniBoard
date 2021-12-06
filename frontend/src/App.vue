@@ -1,11 +1,13 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>
-    </div>
     <router-view/>
   </div>
 </template>
 
 <style>
+:root{
+    --font-color:black;
+    --main-color:rgb(240, 117, 47);
+    --white-color:white;
+}
 </style>
