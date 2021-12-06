@@ -7,9 +7,9 @@ spring:
     url: jdbc:mysql://localhost:3306/miniboard?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
     username: ssafy
     password: ssafy
-
 mybatis:
   type-aliases-package: com.toyproject.miniboard.model
   mapper-locations: classpath:mappers/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
+logging.level.com.toyproject.miniboard: debug
