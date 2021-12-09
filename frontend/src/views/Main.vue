@@ -15,6 +15,10 @@ export default {
 </script>
 
 <style scoped>
+.main{
+    background-image: url("../assets/board.jpg");
+    height: 100vh;
+}
 nav-bar{
     position: fixed;
     top: 0;

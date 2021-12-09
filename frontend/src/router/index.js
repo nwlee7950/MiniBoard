@@ -4,10 +4,11 @@ import Home from '../views/Home.vue'
 import Main from '../views/Main.vue'
 import Member from '../components/member/Member.vue'
 import MemberForm from '../components/member/MemberForm.vue'
-import Login from '../components/member/loginAndJoin/Login.vue'
-import Join from '../components/member/loginAndJoin/Join.vue'
+import Login from '../components/member/child/Login.vue'
+import Join from '../components/member/child/Join.vue'
 import MyPage from '../components/member/MyPage.vue'
 import Board from '../components/board/Board.vue'
+import BoardWrite from '../components/board/BoardWrite.vue'
 
 Vue.use(VueRouter)
 
@@ -24,6 +25,16 @@ const routes = [
     redirect: '/main/board',
     children:[
         {
+            path: '/main/board',
+            name: 'Board',
+            component: Board,
+        },
+        {
+            path: '/main/board/write',
+            name: 'BoardWrite',
+            component:BoardWrite,
+        },
+        {
           path: '/main/member',
           name: 'Member',
           component: Member,
@@ -33,15 +44,15 @@ const routes = [
                   path: '/main/member/form',
                   name: 'MemberForm',
                   component: MemberForm,
-                  redirect: '/main/member/form/login',
+                  redirect: '/main/member/login',
                   children:[
                     {
-                        path: '/main/member/form/login',
+                        path: '/main/member/login',
                         name: 'Login',
                         component: Login
                     },
                     {
-                        path: '/main/member/form/join',
+                        path: '/main/member/join',
                         name: 'Join',
                         component: Join
                     },
@@ -53,11 +64,6 @@ const routes = [
                   component: MyPage
               },
           ]
-        },
-        {
-          path: '/main/board',
-          name: 'Board',
-          component: Board
         },
     ]
   },
