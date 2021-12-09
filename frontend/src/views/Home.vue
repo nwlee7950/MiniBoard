@@ -5,8 +5,8 @@
             <strong class="bold">Mini Board,</strong><br>
             Share yours and take other's
         </p>
-        <router-link :to="{name:'Home'}" class="move_join">Join Mini Board</router-link>
-        <button type="button" class="move_board">Go to the Board</button>
+        <router-link :to="{name:'MemberForm'}" class="move_join">Join Mini Board</router-link>
+        <button type="button" class="move_board" @click="move_board">Go to the Board</button>
     </div>
     <div class="icons">
         <img src="../assets/yellow.png" alt="yellow">
@@ -25,6 +25,11 @@
 <script>
 export default {
     name: 'Home',
+    methods:{
+        move_board(){
+            this.$router.push({name:'Main'})
+        }
+    }
 }
 </script>
 
@@ -71,6 +76,7 @@ export default {
 .move_board:hover{
     transform: scale(1.1);
     transition: transform 0.2s ease;
+    cursor: pointer;
 }
 .icons {
     width: 600px;
@@ -78,7 +84,7 @@ export default {
     display: grid;
     grid-template-rows: 4fr 1fr 4fr;
     grid-template-columns: 4fr 1fr 4fr;
-    margin-right: 100px;
+    margin-right: 130px;
 }
 
 img {

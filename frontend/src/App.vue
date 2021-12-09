@@ -7,7 +7,7 @@
 <style>
 :root{
     --font-color:black;
-    --main-color:rgb(240, 117, 47);
+    --main-color:rgb(38, 155, 116);
     --white-color:white;
 }
 </style>
