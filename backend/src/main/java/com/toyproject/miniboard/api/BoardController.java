@@ -42,7 +42,7 @@ public class BoardController {
     @ApiOperation(value = "게시글을 수정한다.", response = String.class)
     @PutMapping
     public ResponseEntity<String> updateBoard(@RequestBody @ApiParam(value = "수정할 글 정보", required = true) BoardDto boardDto) throws Exception{
-        log.debug("updateBoard:{}",boardDto);
+        log.debug("update Board:{}",boardDto);
         boardService.updateBoard(boardDto);
         return new ResponseEntity<String>(HttpStatus.OK);
     }
