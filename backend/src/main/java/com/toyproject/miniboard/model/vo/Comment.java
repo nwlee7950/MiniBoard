@@ -15,18 +15,18 @@ public class Comment {
     private String date;
     private String userId;
     private int parentId;
-    private int group;
+    private int commentGroup;
     private int sequence;
 
     @Builder
-    public Comment(int id, long boardId, String content, String date, String userId, int parentId, int group, int sequence){
+    public Comment(int id, long boardId, String content, String date, String userId, int parentId, int commentGroup, int sequence){
         this.id = id;
         this.boardId = boardId;
         this.content = content;
         this.date = date;
         this.userId = userId;
         this.parentId = parentId;
-        this.group = group;
+        this.commentGroup = commentGroup;
         this.sequence = sequence;
     }
 }
