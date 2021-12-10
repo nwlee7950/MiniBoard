@@ -17,7 +17,6 @@ export default {
 
 <style>
 .navbar{
-    padding: 20px 200px;
     display: flex;
     justify-content: space-between;
     align-items: center;

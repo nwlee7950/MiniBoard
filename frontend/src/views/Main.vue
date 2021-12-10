@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-      <nav-bar></nav-bar>
+      <nav-bar class="nav"></nav-bar>
       <router-view/>
   </div>
 </template>
@@ -18,9 +18,12 @@ export default {
 .main{
     background-image: url("../assets/board.jpg");
     height: 100vh;
+    overflow-y: scroll;
 }
-nav-bar{
+.nav{
     position: fixed;
     top: 0;
+    width: 100%;
+    padding: 20px 200px;
 }
 </style>

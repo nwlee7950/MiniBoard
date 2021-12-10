@@ -1,5 +1,5 @@
 <template>
-  <div id="write">
+  <div id="write" class="write">
       <div class="title">write</div>
       <board-form></board-form>
   </div>
@@ -16,7 +16,7 @@ export default {
 
 <style scoped>
 .write {
-    margin-top: 200px;
+    padding-top: 100px;
     display: flex;
     flex-direction: column;
 }

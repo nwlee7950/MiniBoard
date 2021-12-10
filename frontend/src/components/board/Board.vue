@@ -1,5 +1,5 @@
 <template>
-<div id="view">
+<div id="list" class="list">
     <div class="title">Board</div>
     <div class="container">
         <div class="top_bar">
@@ -23,7 +23,6 @@
                     <th>삭제</th>
                     <th>번호</th>
                     <th class="table_title">제목</th>
-                    <th class="table_content">내용</th>
                     <th>작성자</th>
                     <th>작성일</th>
                     <th>조회수</th>
@@ -77,8 +76,8 @@ export default {
 </script>
 
 <style scoped>
-.view {
-    margin-top: 200px;
+.list {
+    padding-top: 100px;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -168,10 +167,6 @@ table {
 }
 
 .table_title {
-    width: 20%;
-}
-
-.table_content {
     width: 40%;
 }
 

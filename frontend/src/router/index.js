@@ -9,6 +9,8 @@ import Join from '../components/member/child/Join.vue'
 import MyPage from '../components/member/MyPage.vue'
 import Board from '../components/board/Board.vue'
 import BoardWrite from '../components/board/BoardWrite.vue'
+import BoardView from '../components/board/BoardView.vue'
+import BoardModify from '../components/board/BoardModify.vue'
 
 Vue.use(VueRouter)
 
@@ -24,6 +26,7 @@ const routes = [
     component: Main,
     redirect: '/main/board',
     children:[
+        // Board
         {
             path: '/main/board',
             name: 'Board',
@@ -32,8 +35,22 @@ const routes = [
         {
             path: '/main/board/write',
             name: 'BoardWrite',
+            // beforeEnter: onlyAuthUser,
             component:BoardWrite,
         },
+        {
+            path: "/main/board/detail/:articleno",
+            name: "BoardView",
+            // beforeEnter: onlyAuthUser,
+            component: BoardView,
+        },
+        {
+            path: "/main/board/update/:articleno",
+            name: "BoardModify",
+            // beforeEnter: onlyAuthUser,
+            component: BoardModify,
+        },
+        // Member
         {
           path: '/main/member',
           name: 'Member',

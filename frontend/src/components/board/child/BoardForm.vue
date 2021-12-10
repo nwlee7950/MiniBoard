@@ -9,8 +9,8 @@
         <textarea name="content" class="content_box"></textarea>
     </form>
     <div class="btn_box">
-        <button @click="submitAndGoList" class="submit_btn">submit</button>
-        <button @click="goList">back</button>
+        <button @click="submitAndGoList" class="submit_btn">Submit</button>
+        <button @click="goList">Back</button>
     </div>
 </div>
 </template>
