@@ -9,5 +9,6 @@
     --font-color:black;
     --main-color:rgb(38, 155, 116);
     --white-color:white;
+    --shadow-color:rgb(163, 159, 159);
 }
 </style>
