@@ -10,6 +10,7 @@
                     <b-form-select-option :value="content">내용</b-form-select-option>
                     <b-form-select-option :value="author">작성자</b-form-select-option>
                 </b-form-select>
+                <input type="text" v-model="keyword" class="keyword" placeholder="검색어..">
                 <button class="search_btn"><i class="fas fa-search"></i></button>
             </div>
             <div class="create_delete">
@@ -49,6 +50,7 @@ export default {
     data() {
         return {
             selected: null,
+            keyword:"",
             articles: [],
             currentPage: 1,
             perPage: 5,
@@ -174,5 +176,12 @@ table {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.keyword{
+    margin: 0 5px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid var(--font-color);
+    padding: 0 10px;
 }
 </style>
