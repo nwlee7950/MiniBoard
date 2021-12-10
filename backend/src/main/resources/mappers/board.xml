@@ -4,6 +4,28 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.toyproject.miniboard.model.mapper.BoardMapper">
 
+    <select id="boardList" parameterType="BoardParameterDto" resultType="Board">
+        select *
+        from board
+        <if test="key != null">
+            <choose>
+                <when test="key.equals('title')">
+                    where title LIKE CONCAT('%', #{word}, '%')
+                </when>
+                <when test="key.equals('content')">
+                    where content LIKE CONCAT('%', #{word}, '%')
+                </when>
+                <when test="key.equals('user_id')">
+                    where user_id LIKE CONCAT('%', #{word}, '%')
+                </when>
+                <when test="key.equals('title_content')">
+                    where title LIKE CONCAT('%', #{word}, '%') OR content LIKE CONCAT('%', #{word}, '%')
+                </when>
+            </choose>
+        </if>
+        order by id desc
+    </select>
+
     <insert id="insertBoard" parameterType="Board">
         insert into board (user_id, title, content, date, is_notice)
         values (#{userId}, #{title}, #{content}, now(),  #{isNotice})

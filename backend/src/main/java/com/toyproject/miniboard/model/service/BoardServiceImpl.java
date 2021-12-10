@@ -1,6 +1,7 @@
 package com.toyproject.miniboard.model.service;
 
 import com.toyproject.miniboard.model.dto.BoardDto;
+import com.toyproject.miniboard.model.dto.BoardParameterDto;
 import com.toyproject.miniboard.model.mapper.BoardMapper;
 import com.toyproject.miniboard.model.vo.Board;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,9 @@ public class BoardServiceImpl implements BoardService{
     private final BoardMapper boardMapper;
 
     @Override
-    public List<BoardDto> boardList() {
-        return null;
+    public List<Board> boardList(BoardParameterDto boardParameterDto) {
+
+        return boardMapper.boardList(boardParameterDto);
     }
 
     @Override

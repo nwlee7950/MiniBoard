@@ -1,6 +1,7 @@
 package com.toyproject.miniboard.api;
 
 import com.toyproject.miniboard.model.dto.BoardDto;
+import com.toyproject.miniboard.model.dto.BoardParameterDto;
 import com.toyproject.miniboard.model.service.BoardService;
 import com.toyproject.miniboard.model.vo.Board;
 import io.swagger.annotations.Api;
@@ -45,6 +46,13 @@ public class BoardController {
         log.debug("update Board:{}",boardDto);
         boardService.updateBoard(boardDto);
         return new ResponseEntity<String>(HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "게시글 목록을 반환한다.", response = List.class)
+    @GetMapping
+    public ResponseEntity<List<Board>> boardList(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = false) BoardParameterDto boardParameterDto) throws  Exception{
+        log.info("board List:{}", boardParameterDto);
+        return new ResponseEntity<List<Board>>(boardService.boardList(boardParameterDto), HttpStatus.OK);
     }
 
     @ApiOperation(value="게시글번호에 맞는 게시글을 반환한다.",response= List.class)
