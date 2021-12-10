@@ -81,20 +81,17 @@ export default {
     margin-top: 200px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
 }
 
 .title {
     font-size: 70px;
-    width: 100%;
     margin: 60px 0;
     text-decoration: underline;
     text-align: center;
 }
 
 .container {
-    margin: 50px 200px;
     padding: 30px;
     border-radius: 5px;
     box-shadow: 2px 2px 10px var(--shadow-color);
