@@ -8,6 +8,25 @@
         values (#{boardId}, #{content}, now(), #{userId}, #{parentId}, #{commentGroup}, #{sequence})
     </insert>
 
+    <update id="updateComment" parameterType="Comment">
+        update comment
+        set content = #{content}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteComment" parameterType="int">
+        delete
+        from comment
+        where id = #{id}
+    </delete>
+
+    <select id="commentList" parameterType="long" resultType="Comment">
+        select *
+        from comment
+        where board_id = #{boardId}
+        order by comment_group asc, sequence asc
+    </select>
+
     <select id="getCommentGroupMax" parameterType="long" resultType="int">
         select IFNULL(MAX(comment_group+1), 1)
         from comment
@@ -25,16 +44,4 @@
         from comment
         where board_id = #{boardId} AND comment_group = #{commentGroup}
     </select>
-
-    <update id="updateComment" parameterType="Comment">
-        update comment
-        set content = #{content}
-        where id = #{id}
-    </update>
-
-    <delete id="deleteComment" parameterType="int">
-        delete
-        from comment
-        where id = #{id}
-    </delete>
 </mapper>

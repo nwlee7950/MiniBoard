@@ -4,8 +4,11 @@ import com.toyproject.miniboard.model.dto.CommentDto;
 import com.toyproject.miniboard.model.vo.Comment;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface CommentMapper {
+    public List<Comment> commentList(long boardId);
     public void insertComment(Comment comment);
     public void updateComment(Comment comment);
     public void deleteComment(int id);

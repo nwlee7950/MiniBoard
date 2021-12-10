@@ -7,12 +7,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService{
     private final CommentMapper commentMapper;
+
+    @Override
+    public List<Comment> commentList(long boardId) {
+        return commentMapper.commentList(boardId);
+    }
 
     @Override
     public void insertComment(CommentDto commentDto) {

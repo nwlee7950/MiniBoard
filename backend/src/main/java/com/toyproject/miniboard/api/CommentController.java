@@ -2,6 +2,7 @@ package com.toyproject.miniboard.api;
 
 import com.toyproject.miniboard.model.dto.CommentDto;
 import com.toyproject.miniboard.model.service.CommentService;
+import com.toyproject.miniboard.model.vo.Comment;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -10,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Api(tags = {"Comment Controller"})
@@ -43,5 +46,12 @@ public class CommentController {
         log.info("delete Comment");
         commentService.deleteComment(id);
         return new ResponseEntity<CommentDto>(HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "댓글 목록을 반환한다.", response = List.class)
+    @GetMapping("/{boardId}")
+    public ResponseEntity<List<Comment>> commentList(@PathVariable @ApiParam(value = "글 번호", required = true) long boardId) throws Exception {
+        log.info("comment List called");
+        return new ResponseEntity<List<Comment>>(commentService.commentList(boardId), HttpStatus.OK);
     }
 }
