@@ -7,6 +7,7 @@
 
 <script>
 import BoardForm from './child/BoardForm.vue';
+// import { writeArticle, getArticle, modifyArticle } from "@/api/board";
 export default {
     components:{
         BoardForm,
