@@ -1,11 +1,11 @@
 <template>
 <tr class="tr">
-    <th><input type="checkbox" class="checkbox"></th>
-    <th>1</th>
-    <th @click="goDetail" class="title">goDetail</th>
-    <th>헬로</th>
-    <th>헬로</th>
-    <th>1</th>
+    <td><input type="checkbox" class="checkbox"></td>
+    <td>{{id}}</td>
+    <td @click="goDetail" class="title">{{title}}</td>
+    <td>{{userId}}</td>
+    <td>{{date}}</td>
+    <td>{{hits}}</td>
 </tr>
 </template>
 
@@ -20,15 +20,23 @@ export default {
                 }
             })
         }
-    }
+    },
+    props: {
+        id: Number,
+        title: String,
+        userId: String,
+        date: String,
+        hits: Number,
+    },
 }
 </script>
 
 <style scoped>
-.title{
+.title {
     color: var(--main-color);
 }
-.title:hover{
+
+.title:hover {
     opacity: 0.7;
     cursor: pointer;
 }

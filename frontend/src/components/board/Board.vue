@@ -20,22 +20,22 @@
         </div>
         <div class="table">
             <table>
-                <tr class="thead">
-                    <th>삭제</th>
-                    <th>번호</th>
-                    <th class="table_title">제목</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
-                    <th>조회수</th>
-                </tr>
-                <board-list-row></board-list-row>
-                <!-- <tbody class="tbody" id="my-table" :per-page="perPage" :current-page="currentPage">
+                <thead>
+                    <tr class="thead">
+                        <th>삭제</th>
+                        <th>번호</th>
+                        <th class="table_title">제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                        <th>조회수</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody" id="my-table" :per-page="perPage" :current-page="currentPage">
                     <board-list-row v-for="(article, index) in itemsForList" :key="index" v-bind="article" class="boardItem" />
-                </tbody> -->
+                </tbody>
             </table>
-        </div>
-        <div class="paging">
-            <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" aria-controls="table"></b-pagination>
+            <b-pagination class="page" v-model="currentPage" :total-rows="rows" :per-page="perPage" aria-controls="my-table">
+            </b-pagination>
         </div>
     </div>
 </div>
@@ -43,6 +43,10 @@
 
 <script>
 import BoardListRow from './child/BoardListRow';
+import {
+    listArticle
+} from "@/api/board.js";
+
 export default {
     components: {
         BoardListRow,
@@ -50,7 +54,7 @@ export default {
     data() {
         return {
             selected: null,
-            keyword:"",
+            keyword: "",
             articles: [],
             currentPage: 1,
             perPage: 5,
@@ -73,7 +77,23 @@ export default {
                 name: 'BoardWrite'
             });
         }
-    }
+    },
+    created() {
+        let param = {
+            key: null,
+            word: null,
+        };
+        listArticle(
+            param,
+            (response) => {
+                this.articles = response.data;
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    },
+
 }
 </script>
 
@@ -177,7 +197,8 @@ table {
     justify-content: center;
     align-items: center;
 }
-.keyword{
+
+.keyword {
     margin: 0 5px;
     border-radius: 5px;
     outline: none;
