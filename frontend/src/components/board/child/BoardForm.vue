@@ -1,31 +1,107 @@
 <template>
 <div id="form" class="container">
-    <form class="form">
-        <label for="author">작성자</label>
-        <input type="text" name="author">
-        <label for="title">제목</label>
-        <input type="text" name="title">
-        <label for="content">내용</label>
-        <textarea name="content" class="content_box"></textarea>
+    <form @submit="onSubmit" @reset="onReset">
+        <div class="form">
+            <label for="userId">작성자</label>
+            <input type="text" name="userId" v-model="article.userId" ref="userId">
+            <label for="title">제목</label>
+            <input type="text" name="title" v-model="article.title" ref="title">
+            <label for="content">내용</label>
+            <textarea name="content" class="content_box" v-model="article.content" ref="content"></textarea>
+        </div>
+        <div class="btn_box">
+            <label for="notice">공지</label>
+            <input type="checkbox" name="notice" v-model="article.notice">
+            <button type="submit" class="submit_btn" v-if="this.type === 'register'">Register</button>
+            <button type="submit" class="submit_btn" v-else>Update</button>
+            <button type="reset" @click="moveList">Back</button>
+        </div>
     </form>
-    <div class="btn_box">
-        <button @click="submitAndGoList" class="submit_btn">Submit</button>
-        <button @click="goList">Back</button>
-    </div>
 </div>
 </template>
 
 <script>
+import {
+    writeArticle,
+} from "@/api/board";
 export default {
-methods:{
-    submitAndGoList(){
-        // 새글 저장 
-        this.$router.push({name:'Board'});
+    data() {
+        return {
+            article: {
+                userId: "",
+                title: "",
+                content: "",
+                notice: false,
+            }
+        }
     },
-    goList(){
-        this.$router.push({name:'Board'});
-    }
-}
+    methods: {
+        onSubmit(event) {
+            event.preventDefault();
+
+            let err = true;
+            let msg = "";
+            !this.article.userId &&
+                ((msg = "작성자 입력해주세요"),
+                    (err = false),
+                    this.$refs.userId.focus());
+            err &&
+            !this.article.title &&
+                ((msg = "제목 입력해주세요"),
+                    (err = false),
+                    this.$refs.title.focus());
+            err &&
+                !this.article.content &&
+                ((msg = "내용 입력해주세요"),
+                    (err = false),
+                    this.$refs.content.focus());
+
+            if (!err) alert(msg);
+            else
+                this.type === "register" ? this.registArticle() : this.updateArticle();
+        },
+        onReset(event) {
+            event.preventDefault();
+            this.article.userId = "";
+            this.article.subject = "";
+            this.article.content = "";
+            this.article.notice = false;
+            this.$router.push({
+                name: "Board"
+            });
+        },
+        registArticle() {
+            writeArticle({
+                    userId: this.article.userId,
+                    title: this.article.title,
+                    content: this.article.content,
+                    notice: this.article.notice,
+                },
+                () => {
+                    let msg = "등록이 완료되었습니다.";
+                    alert(msg);
+                    this.moveList();
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+        },
+        moveList() {
+            this.$router.push({
+                name: "Board"
+            });
+        },
+
+    },
+    props: {
+        type: {
+            type: String
+        },
+    },
+    created() {
+    },
+
 }
 </script>
 
@@ -61,19 +137,22 @@ textarea:focus {
 .content_box {
     height: 200px;
 }
-.btn_box{
+
+.btn_box {
     display: flex;
     justify-content: flex-end;
     padding-right: 200px;
 }
-.btn_box>button{
+
+.btn_box>button {
     border: none;
     background-color: var(--main-color);
     border-radius: 5px;
     color: var(--white-color);
     padding: 5px 15px;
 }
-.submit_btn{
+
+.submit_btn {
     margin-right: 5px;
 }
 </style>

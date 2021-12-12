@@ -9,6 +9,7 @@ function listArticle(param, success, fail) {
 
 //새로운 글 작성
 function writeArticle(article, success, fail) {
+    console.log(article);
   api.post(`/boards`, JSON.stringify(article)).then(success).catch(fail);
 }
 

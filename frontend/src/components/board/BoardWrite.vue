@@ -1,13 +1,12 @@
 <template>
   <div id="write" class="write">
       <div class="title">write</div>
-      <board-form></board-form>
+      <board-form type="register"></board-form>
   </div>
 </template>
 
 <script>
 import BoardForm from './child/BoardForm.vue';
-// import { writeArticle, getArticle, modifyArticle } from "@/api/board";
 export default {
     components:{
         BoardForm,

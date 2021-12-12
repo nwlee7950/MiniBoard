@@ -57,7 +57,7 @@ export default {
             keyword: "",
             articles: [],
             currentPage: 1,
-            perPage: 5,
+            perPage: 20,
         };
     },
     computed: {
