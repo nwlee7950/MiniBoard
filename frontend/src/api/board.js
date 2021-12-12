@@ -13,7 +13,7 @@ function writeArticle(article, success, fail) {
   api.post(`/boards`, JSON.stringify(article)).then(success).catch(fail);
 }
 
-//해당 글 조회(변수 수정 예정)
+//해당 글 조회
 function getArticle(articleno, success, fail) {
   api.get(`/boards/${articleno}`).then(success).catch(fail);
 }

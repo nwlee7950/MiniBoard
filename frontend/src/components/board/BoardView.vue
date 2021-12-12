@@ -32,12 +32,12 @@
         </div>
         <div class="comments_list">
             <h3>Comments</h3>
-            <board-comment></board-comment>
-            <board-comment></board-comment>
-            <board-comment></board-comment>
-            <board-comment></board-comment>
-            <board-comment></board-comment>
+            <div id="my-table" :per-page="perPage" :current-page="currentPage">
+                <board-comment v-for="(comment, index) in itemsForList" :key="index" v-bind="comment" class="commentItem" />
+            </div>
         </div>
+        <b-pagination class="page" v-model="currentPage" :total-rows="rows" :per-page="perPage" aria-controls="my-table">
+        </b-pagination>
     </div>
 </div>
 </template>
@@ -48,15 +48,31 @@ import {
     getArticle,
     deleteArticle,
 } from "@/api/board";
-
+import {
+    getComment
+} from "@/api/comment.js";
 export default {
     data() {
         return {
             article: {},
+            comments: [],
+            currentPage: 1,
+            perPage: 6,
         };
     },
     components: {
         BoardComment,
+    },
+    computed: {
+        rows() {
+            return this.comments.length;
+        },
+        itemsForList() {
+            return this.comments.slice(
+                (this.currentPage - 1) * this.perPage,
+                this.currentPage * this.perPage,
+            );
+        },
     },
     methods: {
         goModify() {
@@ -106,6 +122,15 @@ export default {
                 console.log("에러발생!!", error);
             }
         );
+        getComment(
+            this.$route.params.articleno,
+            (response) => {
+                this.comments = response.data;
+            },
+            (error) => {
+                console.log("에러발생!!", error);
+            }
+        )
     },
 
 }

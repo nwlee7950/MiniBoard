@@ -1,9 +1,9 @@
 <template>
 <div class="comment_box">
-    <h5 class="content">Hello everyone!!</h5>
+    <h5 class="content">{{content}}</h5>
     <div class="author_info">
-        <div class="author">by Sue</div>
-        <div class="authored_time">2021. 12. 10</div>
+        <div class="author">by {{userId}}</div>
+        <div class="authored_time">{{date}}</div>
     </div>
     <div class="options">
         <i class="fas fa-reply reply"></i>
@@ -15,7 +15,14 @@
 
 <script>
 export default {
-
+    props: {
+        boardId: Number,
+        id: Number,
+        userId: String,
+        content: String,
+        date: String,
+    },
+    created() {}
 }
 </script>
 
@@ -49,7 +56,8 @@ export default {
     color: var(--main-color);
     cursor: pointer;
 }
-.mm{
+
+.mm {
     margin-left: 15px;
 }
 </style>
