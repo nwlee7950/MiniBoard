@@ -7,4 +7,7 @@ function getComment(commentno, success, fail){
     api.get(`/comments/${commentno}`).then(success).catch(fail);
 }
 
-export { getComment };
+function deleteComment(commentno, success, fail){
+    api.delete(`/comments/${commentno}`).then(success).catch(fail);
+}
+export { getComment, deleteComment };

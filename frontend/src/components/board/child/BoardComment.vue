@@ -6,14 +6,19 @@
         <div class="authored_time">{{date}}</div>
     </div>
     <div class="options">
-        <i class="fas fa-reply reply"></i>
-        <i class="fas fa-pen mm"></i>
-        <i class="fas fa-trash-alt mm"></i>
+        <form @submit="onSubmit">
+            <button><i class="fas fa-reply reply"></i></button>
+            <button><i class="fas fa-pen mm"></i></button>
+            <button type="submit"><i class="fas fa-trash-alt mm"></i></button>
+        </form>
     </div>
 </div>
 </template>
 
 <script>
+import {
+    deleteComment
+} from "@/api/comment.js";
 export default {
     props: {
         boardId: Number,
@@ -22,7 +27,26 @@ export default {
         content: String,
         date: String,
     },
-    created() {}
+    methods: {
+        onSubmit(event) {
+            event.preventDefault();
+            //현재 접속 중인 유저가 댓글 작성자라면
+            this.removeComment();
+        },
+        removeComment() {
+            let id = this.id;
+            deleteComment(
+                id,
+                () => {
+                    let msg = "삭제가 완료되었습니다.";
+                    alert(msg);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            )
+        },
+    }
 }
 </script>
 
@@ -43,6 +67,7 @@ export default {
 
 .author {
     margin-right: 10px;
+    width: 100px;
 }
 
 .options {
@@ -52,12 +77,18 @@ export default {
     font-size: 20px;
 }
 
-.options>i:hover {
+button>i:hover {
     color: var(--main-color);
     cursor: pointer;
 }
 
 .mm {
     margin-left: 15px;
+}
+
+button {
+    background-color: var(--white-color);
+    border: none;
+    outline: none;
 }
 </style>

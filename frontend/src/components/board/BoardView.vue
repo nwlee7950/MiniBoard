@@ -23,7 +23,7 @@
         <div class="type">
             <div class="user">
                 <div class="icon"></div>
-                <label for="author" class="author">Sue</label>
+                <label for="author" class="author">{{article.userId}}</label>
             </div>
             <div class="input_area">
                 <input type="text" class="type_input" placeholder="comment...">
