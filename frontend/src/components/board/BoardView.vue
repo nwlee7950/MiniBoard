@@ -59,7 +59,7 @@ export default {
             this.$router.push({
                 name: 'BoardModify',
                 params: {
-                    articleno: 1,
+                    articleno: this.article.id,
                 }
             });
         },
@@ -76,7 +76,7 @@ export default {
                 this.article = response.data;
             },
             (error) => {
-                console.log("삭제시 에러발생!!", error);
+                console.log("에러발생!!", error);
             }
         );
     },

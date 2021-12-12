@@ -1,7 +1,7 @@
 <template>
   <div id="modify" class="modify">
       <div class="title">modify</div>
-      <board-form></board-form>
+      <board-form type="modify"></board-form>
   </div>
 </template>
 
