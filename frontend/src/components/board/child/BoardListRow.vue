@@ -16,7 +16,7 @@ export default {
             this.$router.push({
                 name: 'BoardView',
                 params: {
-                    articleno: 1,
+                    articleno: this.id,
                 }
             })
         }

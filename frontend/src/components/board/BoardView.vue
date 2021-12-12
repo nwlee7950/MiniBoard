@@ -4,11 +4,11 @@
     <div class="container">
         <form class="form">
             <label for="author">작성자</label>
-            <input type="text" name="author">
+            <input type="text" name="author" v-model="article.userId">
             <label for="title">제목</label>
-            <input type="text" name="title">
+            <input type="text" name="title" v-model="article.title">
             <label for="content">내용</label>
-            <textarea name="content" class="content_box"></textarea>
+            <textarea name="content" class="content_box" v-model="article.content"></textarea>
         </form>
         <div class="btn_box">
             <button @click="goModify" class="modify_btn">Modify</button>
@@ -41,7 +41,16 @@
 
 <script>
 import BoardComment from "./child/BoardComment.vue";
+import {
+    getArticle,
+} from "@/api/board";
+
 export default {
+    data() {
+        return {
+            article: {},
+        };
+    },
     components: {
         BoardComment,
     },
@@ -59,7 +68,19 @@ export default {
                 name: 'Board'
             });
         }
-    }
+    },
+    created() {
+        getArticle(
+            this.$route.params.articleno,
+            (response) => {
+                this.article = response.data;
+            },
+            (error) => {
+                console.log("삭제시 에러발생!!", error);
+            }
+        );
+    },
+
 }
 </script>
 
@@ -130,18 +151,22 @@ button {
 .comments {
     padding: 100px 220px 50px 250px;
 }
-h3{
+
+h3 {
     margin-bottom: 30px;
 }
+
 .type {
     display: flex;
     flex-direction: column;
 }
-.user{
+
+.user {
     display: flex;
     align-items: center;
 }
-.icon{
+
+.icon {
     width: 30px;
     height: 30px;
     margin-right: 10px;
@@ -153,9 +178,11 @@ h3{
     justify-content: center;
     font-size: 17px;
 }
-.author{
+
+.author {
     font-size: 25px;
 }
+
 .type_input {
     width: 90%;
     border: none;
