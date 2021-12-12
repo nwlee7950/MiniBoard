@@ -15,14 +15,12 @@
             </div>
             <div class="create_delete">
                 <button class="create option" @click="goWrite"><i class="fas fa-plus"></i>새로운 글 작성</button>
-                <button class="delete option"><i class="fas fa-trash"></i>선택 글 삭제</button>
             </div>
         </div>
         <div class="table">
             <table>
                 <thead>
                     <tr class="thead">
-                        <th>삭제</th>
                         <th>번호</th>
                         <th class="table_title">제목</th>
                         <th>작성자</th>
@@ -46,7 +44,6 @@ import BoardListRow from './child/BoardListRow';
 import {
     listArticle
 } from "@/api/board.js";
-
 export default {
     components: {
         BoardListRow,
@@ -69,7 +66,7 @@ export default {
                 (this.currentPage - 1) * this.perPage,
                 this.currentPage * this.perPage,
             );
-        }
+        },
     },
     methods: {
         goWrite() {
@@ -153,10 +150,6 @@ export default {
     align-items: center;
 }
 
-.create {
-    margin-right: 10px;
-}
-
 .option {
     border: 1px solid var(--main-color);
     background-color: var(--main-color);
@@ -189,7 +182,7 @@ table {
 }
 
 .table_title {
-    width: 40%;
+    width: 50%;
 }
 
 .paging {

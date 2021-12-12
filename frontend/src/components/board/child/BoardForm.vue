@@ -24,7 +24,7 @@
 import {
     writeArticle,
     getArticle,
-    modifyArticle
+    modifyArticle,
 } from "@/api/board";
 export default {
     data() {

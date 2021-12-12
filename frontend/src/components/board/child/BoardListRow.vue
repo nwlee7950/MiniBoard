@@ -1,6 +1,5 @@
 <template>
 <tr class="tr">
-    <td><input type="checkbox" class="checkbox"></td>
     <td>{{id}}</td>
     <td @click="goDetail" class="title">{{title}}</td>
     <td>{{userId}}</td>
@@ -11,6 +10,10 @@
 
 <script>
 export default {
+    data(){
+        return{
+        }
+    },
     methods: {
         goDetail() {
             this.$router.push({

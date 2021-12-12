@@ -2,18 +2,21 @@
 <div id="view" class="view">
     <div class="title">Detail</div>
     <div class="container">
-        <form class="form">
-            <label for="author">작성자</label>
-            <input type="text" name="author" v-model="article.userId">
-            <label for="title">제목</label>
-            <input type="text" name="title" v-model="article.title">
-            <label for="content">내용</label>
-            <textarea name="content" class="content_box" v-model="article.content"></textarea>
+        <form @submit="onSubmit">
+            <div class="form">
+                <label for="author">작성자</label>
+                <input type="text" name="author" v-model="article.userId">
+                <label for="title">제목</label>
+                <input type="text" name="title" v-model="article.title">
+                <label for="content">내용</label>
+                <textarea name="content" class="content_box" v-model="article.content"></textarea>
+            </div>
+            <div class="btn_box">
+                <button @click="goModify" class="modify_btn">Modify</button>
+                <button type="submit" class="modify_btn">Delete</button>
+                <button @click="goList">Back</button>
+            </div>
         </form>
-        <div class="btn_box">
-            <button @click="goModify" class="modify_btn">Modify</button>
-            <button @click="goList">Back</button>
-        </div>
     </div>
     <div class="comments">
         <h3 class="comment_title">New Comment</h3>
@@ -43,6 +46,7 @@
 import BoardComment from "./child/BoardComment.vue";
 import {
     getArticle,
+    deleteArticle,
 } from "@/api/board";
 
 export default {
@@ -67,7 +71,30 @@ export default {
             this.$router.push({
                 name: 'Board'
             });
-        }
+        },
+        onSubmit(event) {
+            event.preventDefault();
+            //현재 접속 중인 유저가 글 작성자라면
+            this.removeArticle();
+        },
+        removeArticle() {
+            deleteArticle(
+                this.$route.params.articleno,
+                () => {
+                    let msg = "삭제가 완료되었습니다.";
+                    alert(msg);
+                    this.moveList();
+                },
+                (error) => {
+                    console.log(error);
+                }
+            )
+        },
+        moveList() {
+            this.$router.push({
+                name: "Board"
+            });
+        },
     },
     created() {
         getArticle(
