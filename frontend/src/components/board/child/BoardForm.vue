@@ -24,7 +24,7 @@
 import {
     writeArticle,
     getArticle,
-    // modifyArticle
+    modifyArticle
 } from "@/api/board";
 export default {
     data() {
@@ -34,6 +34,7 @@ export default {
                 title: "",
                 content: "",
                 notice: false,
+                id: 0,
             }
         }
     },
@@ -89,36 +90,29 @@ export default {
                 }
             );
         },
-        // updateArticle() {
-        //     modifyArticle({
-        //             userId: this.article.userId,
-        //             title: this.article.title,
-        //             content: this.article.content,
-        //             notice: this.article.notice,
-        //         },
-        //         ({
-        //             data
-        //         }) => {
-        //             let msg = "수정 처리시 문제가 발생했습니다.";
-        //             if (data === "success") {
-        //                 msg = "수정이 완료되었습니다.";
-        //             }
-        //             alert(msg);
-        //             this.$router.push({
-        //                 name: "Board"
-        //             });
-        //         },
-        //         (error) => {
-        //             console.log(error);
-        //         }
-        //     );
-        // },
+        updateArticle() {
+            modifyArticle({
+                    userId: this.article.userId,
+                    title: this.article.title,
+                    content: this.article.content,
+                    notice: this.article.notice,
+                    id: this.article.id,
+                },
+                () => {
+                    let msg = "수정이 완료되었습니다.";
+                    alert(msg);
+                    this.moveList();
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+        },
         moveList() {
             this.$router.push({
                 name: "Board"
             });
         },
-
     },
     props: {
         type: {
@@ -134,6 +128,7 @@ export default {
                     this.article.title = response.data.title;
                     this.article.content = response.data.content;
                     this.article.notice = response.data.notice;
+                    this.article.id = this.$route.params.articleno;
                 },
                 (error) => {
                     console.log("에러발생!!", error);
