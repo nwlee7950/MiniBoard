@@ -148,7 +148,8 @@ export default {
         getComment(
             this.$route.params.articleno,
             (response) => {
-                this.comments = response.data;
+                let comments = response.data.filter(comment => comment.parentId === 0);
+                this.comments = comments;
             },
             (error) => {
                 console.log("에러발생!!", error);

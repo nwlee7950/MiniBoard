@@ -1,6 +1,6 @@
 <template>
 <div class="reply">
-    hi
+    <!-- create reply (input form) -->
     <reply-row v-for="(reply, index) in replys" :key="index" v-bind="reply"></reply-row>
 </div>
 </template>
