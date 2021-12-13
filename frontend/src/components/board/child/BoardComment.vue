@@ -6,7 +6,7 @@
         <div class="authored_time">{{date}}</div>
     </div>
     <div class="options">
-        <button><i class="fas fa-reply reply"></i></button>
+        <button @click="toggleReply"><i class="fas fa-reply reply"></i></button>
         <button id="show-modal" @click="showModal = true"><i class="fas fa-pen mm"></i></button>
         <form @submit="onUpdate">
             <Modal v-if="showModal" @close="showModal = false">
@@ -21,24 +21,28 @@
             <button type="submit"><i class="fas fa-trash-alt mm"></i></button>
         </form>
     </div>
+    <Reply v-if="showReply" v-bind:id="id"></Reply>
 </div>
 </template>
 
 <script>
 import Modal from "./ModalComment.vue";
+import Reply from "./BoardReply.vue";
 import {
     deleteComment,
-    modifyComment
+    modifyComment,
 } from "@/api/comment.js";
 export default {
     data() {
         return {
             showModal: false,
             rewrite: "",
+            showReply: false,
         }
     },
     components: {
         Modal,
+        Reply,
     },
     props: {
         boardId: Number,
@@ -91,6 +95,9 @@ export default {
                     console.log(error);
                 }
             )
+        },
+        toggleReply() {
+            this.showReply = !this.showReply;
         }
     }
 }
