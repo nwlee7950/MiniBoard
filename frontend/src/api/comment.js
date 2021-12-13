@@ -15,4 +15,8 @@ function writeComment(comment, success, fail){
     console.log(JSON.stringify(comment));
     api.post(`/comments`, JSON.stringify(comment)).then(success).catch(fail);
 }
-export { getComment, deleteComment, writeComment };
+
+function modifyComment(comment, success, fail){
+    api.put(`/comments`, JSON.stringify(comment)).then(success).catch(fail);
+}
+export { getComment, deleteComment, writeComment, modifyComment };

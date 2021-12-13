@@ -6,9 +6,18 @@
         <div class="authored_time">{{date}}</div>
     </div>
     <div class="options">
+        <button><i class="fas fa-reply reply"></i></button>
+        <button id="show-modal" @click="showModal = true"><i class="fas fa-pen mm"></i></button>
+        <form @submit="onUpdate">
+            <Modal v-if="showModal" @close="showModal = false">
+                <h3 slot="header">
+                    댓글 수정 <i class="fas fa-times" @click="removeModal"></i>
+                </h3>
+                <input slot="body" type="text" v-model="rewrite" />
+                <button slot="footer" type="submit">Update</button>
+            </Modal>
+        </form>
         <form @submit="onSubmit">
-            <button><i class="fas fa-reply reply"></i></button>
-            <button><i class="fas fa-pen mm"></i></button>
             <button type="submit"><i class="fas fa-trash-alt mm"></i></button>
         </form>
     </div>
@@ -16,10 +25,21 @@
 </template>
 
 <script>
+import Modal from "./ModalComment.vue";
 import {
-    deleteComment
+    deleteComment,
+    modifyComment
 } from "@/api/comment.js";
 export default {
+    data() {
+        return {
+            showModal: false,
+            rewrite: "",
+        }
+    },
+    components: {
+        Modal,
+    },
     props: {
         boardId: Number,
         id: Number,
@@ -46,6 +66,32 @@ export default {
                 }
             )
         },
+        removeModal() {
+            this.showModal = !this.showModal;
+        },
+        onUpdate(event) {
+            event.preventDefault();
+            //현재 접속 중인 유저가 댓글 작성자라면
+            this.updateComment();
+        },
+        updateComment() {
+            let comment = {
+                userId: this.userId,
+                content: this.rewrite,
+                id: this.id
+            }
+            modifyComment(
+                comment,
+                () => {
+                    let msg = "댓글 수정이 완료되었습니다.";
+                    alert(msg);
+                    this.removeModal();
+                },
+                (error) => {
+                    console.log(error);
+                }
+            )
+        }
     }
 }
 </script>
@@ -75,6 +121,7 @@ export default {
     right: 15px;
     top: 30px;
     font-size: 20px;
+    display: flex;
 }
 
 button>i:hover {
