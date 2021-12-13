@@ -23,12 +23,12 @@
         <div class="type">
             <div class="user">
                 <div class="icon"></div>
-                <label for="author" class="author">{{article.userId}}</label>
+                <label for="author" class="author">{{curUser}}</label>
             </div>
-            <div class="input_area">
-                <input type="text" class="type_input" placeholder="comment...">
-                <button>Upload</button>
-            </div>
+            <form class="input_area" @submit="createComment">
+                <input type="text" class="type_input" placeholder="comment..." v-model="newComment">
+                <button type="submit">Upload</button>
+            </form>
         </div>
         <div class="comments_list">
             <h3>Comments</h3>
@@ -49,7 +49,8 @@ import {
     deleteArticle,
 } from "@/api/board";
 import {
-    getComment
+    getComment,
+    writeComment,
 } from "@/api/comment.js";
 export default {
     data() {
@@ -58,6 +59,8 @@ export default {
             comments: [],
             currentPage: 1,
             perPage: 6,
+            newComment: "",
+            curUser: "jisu",
         };
     },
     components: {
@@ -110,6 +113,26 @@ export default {
             this.$router.push({
                 name: "Board"
             });
+        },
+        createComment(event){
+            event.preventDefault();
+            this.registComment();
+        },
+        registComment() {
+            writeComment({
+                    userId: this.curUser,
+                    boardId: this.article.id,
+                    content: this.newComment,
+                },
+                () => {
+                    let msg = "댓글 등록이 완료되었습니다.";
+                    alert(msg);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+            this.newComment = "";
         },
     },
     created() {

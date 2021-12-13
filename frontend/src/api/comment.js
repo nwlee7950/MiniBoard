@@ -10,4 +10,9 @@ function getComment(commentno, success, fail){
 function deleteComment(commentno, success, fail){
     api.delete(`/comments/${commentno}`).then(success).catch(fail);
 }
-export { getComment, deleteComment };
+
+function writeComment(comment, success, fail){
+    console.log(JSON.stringify(comment));
+    api.post(`/comments`, JSON.stringify(comment)).then(success).catch(fail);
+}
+export { getComment, deleteComment, writeComment };
