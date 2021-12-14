@@ -10,7 +10,8 @@
 
     <update id="updateComment" parameterType="Comment">
         update comment
-        set content = #{content}
+        set content = #{content},
+            date = now()
         where id = #{id}
     </update>
 
@@ -18,6 +19,12 @@
         delete
         from comment
         where id = #{id}
+    </delete>
+
+    <delete id="deleteCommentByBoardId" parameterType="long">
+        delete
+        from comment
+        where board_id = #{boardId}
     </delete>
 
     <select id="commentList" parameterType="long" resultType="Comment">
@@ -44,4 +51,16 @@
         from comment
         where board_id = #{boardId} AND comment_group = #{commentGroup}
     </select>
+
+    <select id="getParentId" parameterType="int" resultType="int">
+        select parent_id
+        from comment
+        where id = #{id}
+    </select>
+
+    <delete id="deleteChildren" parameterType="int">
+        delete
+        from comment
+        where parent_id = #{id}
+    </delete>
 </mapper>

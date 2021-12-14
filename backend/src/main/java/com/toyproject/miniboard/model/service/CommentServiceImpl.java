@@ -55,6 +55,9 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public void deleteComment(int id) {
+        if(commentMapper.getParentId(id) == 0){
+            commentMapper.deleteChildren(id);
+        }
         commentMapper.deleteComment(id);
     }
 }

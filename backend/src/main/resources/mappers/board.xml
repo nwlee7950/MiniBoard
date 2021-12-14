@@ -35,7 +35,8 @@
         update board
         set title   = #{title},
             content = #{content},
-            is_notice  = ${isNotice}
+            is_notice  = ${isNotice},
+            date = now()
         where id = #{id}
     </update>
 

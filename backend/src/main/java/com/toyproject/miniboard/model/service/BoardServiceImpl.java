@@ -3,6 +3,7 @@ package com.toyproject.miniboard.model.service;
 import com.toyproject.miniboard.model.dto.BoardDto;
 import com.toyproject.miniboard.model.dto.BoardParameterDto;
 import com.toyproject.miniboard.model.mapper.BoardMapper;
+import com.toyproject.miniboard.model.mapper.CommentMapper;
 import com.toyproject.miniboard.model.vo.Board;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import java.util.List;
 @Service
 public class BoardServiceImpl implements BoardService{
     private final BoardMapper boardMapper;
+    private final CommentMapper commentMapper;
 
     @Override
     public List<Board> boardList(BoardParameterDto boardParameterDto) {
@@ -48,6 +50,7 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public void deleteBoard(long id) {
+        commentMapper.deleteCommentByBoardId(id);
         boardMapper.deleteBoard(id);
     }
 
