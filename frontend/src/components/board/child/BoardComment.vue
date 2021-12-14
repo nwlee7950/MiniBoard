@@ -17,11 +17,17 @@
                 <button slot="footer" type="submit">Update</button>
             </Modal>
         </form>
-        <form @submit="onSubmit">
+        <form @submit="onDelete">
             <button type="submit"><i class="fas fa-trash-alt mm"></i></button>
         </form>
     </div>
-    <Reply v-if="showReply" v-bind:id="id"></Reply>
+    <div class="reply_box" v-if="showReply">
+        <form @submit="onRegist">
+            <input type="text" placeholder="reply.." v-model="reply">
+            <button type="submit">Upload</button>
+            <Reply v-bind:id="id"></Reply>
+        </form>
+    </div>
 </div>
 </template>
 
@@ -31,6 +37,7 @@ import Reply from "./BoardReply.vue";
 import {
     deleteComment,
     modifyComment,
+    writeComment
 } from "@/api/comment.js";
 export default {
     data() {
@@ -38,6 +45,7 @@ export default {
             showModal: false,
             rewrite: "",
             showReply: false,
+            reply: "",
         }
     },
     components: {
@@ -52,10 +60,19 @@ export default {
         date: String,
     },
     methods: {
-        onSubmit(event) {
+        onDelete(event) {
             event.preventDefault();
             //현재 접속 중인 유저가 댓글 작성자라면
             this.removeComment();
+        },
+        onUpdate(event) {
+            event.preventDefault();
+            //현재 접속 중인 유저가 댓글 작성자라면
+            this.updateComment();
+        },
+        onRegist(event) {
+            event.preventDefault();
+            this.registReply();
         },
         removeComment() {
             let id = this.id;
@@ -69,14 +86,6 @@ export default {
                     console.log(error);
                 }
             )
-        },
-        removeModal() {
-            this.showModal = !this.showModal;
-        },
-        onUpdate(event) {
-            event.preventDefault();
-            //현재 접속 중인 유저가 댓글 작성자라면
-            this.updateComment();
         },
         updateComment() {
             let comment = {
@@ -95,6 +104,27 @@ export default {
                     console.log(error);
                 }
             )
+        },
+        registReply() {
+            let reply = {
+                userId: this.userId,
+                content: this.reply,
+                parentId: this.id,
+                boardId: this.$route.params.articleno
+            };
+            writeComment(
+                reply,
+                () => {
+                    let msg = "대댓글 등록이 완료되었습니다.";
+                    alert(msg);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            )
+        },
+        removeModal() {
+            this.showModal = !this.showModal;
         },
         toggleReply() {
             this.showReply = !this.showReply;
