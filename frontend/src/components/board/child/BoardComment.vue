@@ -11,7 +11,7 @@
         <form @submit="onUpdate">
             <Modal v-if="showModal" @close="showModal = false">
                 <h3 slot="header">
-                    댓글 수정 <i class="fas fa-times" @click="removeModal"></i>
+                    Modify this comment<i class="fas fa-times" @click="removeModal"></i>
                 </h3>
                 <input slot="body" type="text" v-model="rewrite" />
                 <button slot="footer" type="submit">Update</button>
