@@ -6,6 +6,7 @@
         <div class="authored_time">{{date}}</div>
     </div>
     <div class="options">
+        <button @click="toggleModal"><i class="fas fa-pen mm"></i></button>
         <form @submit="onUpdate">
             <Modal v-if="showModal" @close="showModal = false">
                 <h3 slot="header">
@@ -26,6 +27,7 @@
 import Modal from "./ModalComment.vue";
 import {
     deleteComment,
+    modifyComment,
 } from "@/api/comment.js";
 export default {
     props: {
@@ -43,11 +45,16 @@ export default {
             rewrite: "",
         }
     },
-    methods:{
+    methods: {
         onDelete(event) {
             event.preventDefault();
             //현재 접속 중인 유저가 댓글 작성자라면
             this.removeReply();
+        },
+        onUpdate(event) {
+            event.preventDefault();
+            //현재 접속 중인 유저가 대댓글 작성자라면
+            this.updateReply();
         },
         removeReply() {
             let id = this.id;
@@ -62,9 +69,31 @@ export default {
                 }
             )
         },
+        updateReply() {
+            let reply = {
+                userId: this.userId,
+                content: this.rewrite,
+                id: this.id
+            };
+            modifyComment(
+                reply,
+                () => {
+                    let msg = "대댓글 수정이 완료되었습니다.";
+                    alert(msg);
+                    this.removeModal();
+                },
+                (error) => {
+                    console.log(error);
+                }
+            )
+        },
         removeModal() {
             this.showModal = !this.showModal;
         },
+        toggleModal(event) {
+            event.preventDefault();
+            this.removeModal();
+        }
     }
 }
 </script>
