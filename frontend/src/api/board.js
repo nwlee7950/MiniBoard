@@ -9,17 +9,12 @@ function listArticle(param, success, fail) {
 
 //새로운 글 작성
 function writeArticle(article, success, fail) {
-    console.log(article);
+  console.log(article);
   api.post(`/boards`, JSON.stringify(article)).then(success).catch(fail);
 }
 
 //해당 글 조회
 function getArticle(articleno, success, fail) {
-  api.get(`/boards/${articleno}`).then(success).catch(fail);
-}
-
-//검색 조건 하 글 조회
-function getAllArticle(articleno, success, fail) {
   api.get(`/boards/${articleno}`).then(success).catch(fail);
 }
 
@@ -33,4 +28,4 @@ function deleteArticle(articleno, success, fail) {
   api.delete(`/boards/${articleno}`).then(success).catch(fail);
 }
 
-export { listArticle, writeArticle, getArticle, getAllArticle, modifyArticle, deleteArticle };
+export { listArticle, writeArticle, getArticle, modifyArticle, deleteArticle };

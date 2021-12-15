@@ -12,11 +12,12 @@
         <button @click="showModal = true"><i class="fas fa-pen mm"></i></button>
         <form @submit="onUpdate">
             <Modal v-if="showModal" @close="showModal = false">
-                <h3 slot="header">
-                    Modify this comment<i class="fas fa-times" @click="toggleModal"></i>
+                <h3 slot="header" class="modal_header">
+                    <span>Update comment</span>
+                    <i class="fas fa-times" @click="toggleModal"></i>
                 </h3>
-                <input slot="body" type="text" v-model="rewrite" />
-                <button slot="footer" type="submit">Update</button>
+                <input slot="body" type="text" v-model="rewrite" placeholder="new comment.." class="modal_body" />
+                <button slot="footer" type="submit" class="modal_footer">Update</button>
             </Modal>
         </form>
         <form @submit="onDelete">
@@ -24,10 +25,12 @@
         </form>
     </div>
     <form class="reply_box" @submit="onRegist" v-if="showReply">
-        <input type="text" placeholder="reply.." v-model="newReply">
-        <button type="submit">Upload</button>
+        <div class="new_reply">
+            <input type="text" placeholder="reply.." v-model="newReply" class="reply_input">
+            <button type="submit" class="reply_btn">Upload</button>
+        </div>
         <div class="reply">
-            <reply-row v-for="(reply, index) in replys" :key="index" v-bind="reply" @changeReplys="toggletwice"></reply-row>
+            <reply-row class="one-reply" v-for="(reply, index) in replys" :key="index" v-bind="reply" @changeReplys="toggletwice"></reply-row>
         </div>
     </form>
 </div>
@@ -137,7 +140,7 @@ export default {
                 }
             );
         },
-        toggletwice(){
+        toggletwice() {
             this.toggleReply();
             this.toggleReply();
         }
@@ -188,7 +191,55 @@ button {
     outline: none;
 }
 
-.reply_box {
-    margin-top: 50px;
+.fa-times {
+    margin-left: 100px;
+}
+
+.fa-times:hover {
+    cursor: pointer;
+    color: var(--main-color);
+}
+
+.modal_header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal_body {
+    width: 100%;
+    padding: 5px;
+}
+
+.modal_footer,
+.reply_btn {
+    background-color: var(--main-color);
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    color: var(--white-color);
+    padding: 5px 15px;
+}
+.new_reply{
+    display: flex;
+}
+.reply_input {
+    width: 90%;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid var(--font-color);
+    margin-right: 15px;
+}
+
+.reply_input:focus{
+    outline: none;
+}
+.reply_box{
+    margin-top: 20px;
+}
+.one-reply{
+    border-bottom: 1px solid var(--shadow-color);
+}
+.one-reply:last-child{
+    border:none;
 }
 </style>

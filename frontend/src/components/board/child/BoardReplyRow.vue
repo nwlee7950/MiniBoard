@@ -1,24 +1,31 @@
 <template>
 <div class="reply_box">
-    <h5 class="content">{{content}}</h5>
-    <div class="author_info">
-        <div class="author">by {{userId}}</div>
-        <div class="authored_time">{{date}}</div>
+    <div class="reply_contents">
+        <h6 class="content">{{content}}</h6>
+        <div class="author_info">
+            <div class="author">by {{userId}}</div>
+            <div class="authored_time">{{date}}</div>
+        </div>
     </div>
     <div class="options">
-        <button @click="toggleModal"><i class="fas fa-pen mm"></i></button>
-        <form @submit="onUpdate">
-            <Modal v-if="showModal" @close="showModal = false">
-                <h3 slot="header">
-                    Modify this reply<i class="fas fa-times" @click="removeModal"></i>
-                </h3>
-                <input slot="body" type="text" v-model="rewrite" />
-                <button slot="footer" type="submit">Update</button>
-            </Modal>
-        </form>
-        <form @submit="onDelete">
-            <button type="submit"><i class="fas fa-trash-alt mm"></i></button>
-        </form>
+        <div class="option">
+            <button @click="toggleModal" class="modify_btn btn"><i class="fas fa-pen mm"></i></button>
+            <form @submit="onUpdate">
+                <Modal v-if="showModal" @close="showModal = false">
+                    <h3 slot="header" class="modal_header">
+                        <span>Update reply</span>
+                        <i class="fas fa-times" @click="removeModal"></i>
+                    </h3>
+                    <input slot="body" type="text" v-model="rewrite" placeholder="new reply.." class="modal_body" />
+                    <button slot="footer" type="submit" class="modal_footer">Update</button>
+                </Modal>
+            </form>
+        </div>
+        <div class="option">
+            <form @submit="onDelete">
+                <button type="submit" class="delete_btn btn"><i class="fas fa-trash-alt mm"></i></button>
+            </form>
+        </div>
     </div>
 </div>
 </template>
@@ -95,21 +102,57 @@ export default {
 
 <style scoped>
 .reply_box {
-    border-radius: 5px;
-    background-color: var(--white-color);
-    box-shadow: 2px 2px 10px var(--shadow-color);
     padding: 15px;
-    margin-bottom: 15px;
-    margin-right: 35px;
     position: relative;
+    display: flex;
+    justify-content: space-between;
 }
-
+.reply_contents{
+    display: flex;
+    flex-direction: column;
+}
+.options{
+    display: flex;
+    align-items: center;
+}
 .author_info {
     display: flex;
+    font-size: 13px;
 }
 
 .author {
     margin-right: 10px;
     width: 100px;
+}
+
+.fa-times {
+    margin-left: 150px;
+}
+
+.fa-times:hover {
+    cursor: pointer;
+    color: var(--main-color);
+}
+
+.modal_header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal_body {
+    width: 100%;
+    padding: 5px;
+}
+
+.modal_footer {
+    background-color: var(--main-color);
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    color: var(--white-color);
+    padding: 5px 15px;
+}
+.btn:hover{
+    color: var(--main-color);
 }
 </style>
