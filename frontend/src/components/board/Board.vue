@@ -28,8 +28,7 @@
                     <board-list-row v-for="(article, index) in itemsForList" :key="index" v-bind="article" class="boardItem" />
                 </tbody>
             </table>
-            <b-pagination class="page" v-model="currentPage" :total-rows="rows" :per-page="perPage" aria-controls="my-table">
-            </b-pagination>
+            <b-pagination v-model="currentPage" :per-page="perPage" :total-rows="rows" align="center" class="pagination"></b-pagination>
         </div>
     </div>
 </div>
@@ -50,7 +49,7 @@ export default {
             selected: null,
             keyword: "",
             currentPage: 1,
-            perPage: 20,
+            perPage: 15,
             options: [{
                     value: null,
                     text: '-- 검색 조건을 선택해주세요 --'
@@ -129,7 +128,8 @@ export default {
     border-radius: 5px;
     box-shadow: 2px 2px 10px var(--shadow-color);
     background-color: var(--white-color);
-    height: 60vh;
+    height: 62vh;
+    position: relative;
 }
 
 .top_bar {
@@ -200,17 +200,16 @@ table {
     width: 50%;
 }
 
-.paging {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .keyword {
     margin: 0 5px;
     border-radius: 5px;
     outline: none;
     border: 1px solid var(--font-color);
     padding: 0 10px;
+}
+.pagination{
+    position: absolute;
+    bottom: 0;
+    left: 43%;
 }
 </style>
