@@ -1,13 +1,15 @@
 <template>
 <div class="comment_box">
-    <h5 class="content">{{content}}</h5>
-    <div class="author_info">
-        <div class="author">by {{userId}}</div>
-        <div class="authored_time">{{date}}</div>
+    <div class="box_content">
+        <h5 class="content">{{content}}</h5>
+        <div class="author_info">
+            <div class="author">by {{userId}}</div>
+            <div class="authored_time">{{date}}</div>
+        </div>
     </div>
     <div class="options">
         <button @click="toggleReply"><i class="fas fa-reply reply"></i></button>
-        <button id="show-modal" @click="showModal = true"><i class="fas fa-pen mm"></i></button>
+        <button @click="showModal = true"><i class="fas fa-pen mm"></i></button>
         <form @submit="onUpdate">
             <Modal v-if="showModal" @close="showModal = false">
                 <h3 slot="header">
@@ -21,34 +23,38 @@
             <button type="submit"><i class="fas fa-trash-alt mm"></i></button>
         </form>
     </div>
-    <div class="reply_box" v-if="showReply">
-        <form @submit="onRegist">
-            <input type="text" placeholder="reply.." v-model="reply">
-            <button type="submit">Upload</button>
-            <Reply v-bind:id="id"></Reply>
-        </form>
-    </div>
+    <form class="reply_box" @submit="onRegist" v-if="showReply">
+        <input type="text" placeholder="reply.." v-model="newReply">
+        <button type="submit">Upload</button>
+        <div class="reply">
+            <reply-row v-for="(reply, index) in replys" :key="index" v-bind="reply" @changeReplys="toggletwice"></reply-row>
+        </div>
+    </form>
 </div>
 </template>
 
 <script>
 import Modal from "./ModalComment.vue";
-import Reply from "./BoardReply.vue";
+import ReplyRow from "./BoardReplyRow.vue";
 import {
     mapActions
 } from "vuex";
+import {
+    getComment,
+} from "@/api/comment.js";
 export default {
     data() {
         return {
             showModal: false,
             rewrite: "",
             showReply: false,
-            reply: "",
+            newReply: "",
+            replys: [],
         }
     },
     components: {
         Modal,
-        Reply,
+        ReplyRow,
     },
     props: {
         boardId: Number,
@@ -59,6 +65,8 @@ export default {
     },
     methods: {
         ...mapActions("commentStore", ["modComment", "delComment"]),
+        ...mapActions("replyStore", ["addReply"]),
+
         //UPDATE COMMENT
         onUpdate(event) {
             event.preventDefault();
@@ -75,6 +83,7 @@ export default {
             this.modComment(comment);
             this.toggleModal();
         },
+
         //DELETE COMMENT
         onDelete(event) {
             event.preventDefault();
@@ -88,34 +97,49 @@ export default {
             }
             this.delComment(comment);
         },
+
         //CREATE REPLY
         onRegist(event) {
             event.preventDefault();
             this.registReply();
+            this.toggletwice();
         },
         registReply() {
-            // let reply = {
-            //     userId: this.userId,
-            //     content: this.reply,
-            //     parentId: this.id,
-            //     boardId: this.$route.params.articleno
-            // };
-            // writeComment(
-            //     reply,
-            //     () => {
-            //         let msg = "대댓글 등록이 완료되었습니다.";
-            //         alert(msg);
-            //     },
-            //     (error) => {
-            //         console.log(error);
-            //     }
-            // )
+            let info = {
+                userId: this.userId,
+                content: this.newReply,
+                parentId: this.id,
+                boardId: this.$route.params.articleno
+            };
+            this.addReply(info);
+            this.newReply = "";
         },
+
+        //MODAL
         toggleModal() {
             this.showModal = !this.showModal;
         },
         toggleReply() {
             this.showReply = !this.showReply;
+            this.getReplys();
+        },
+        getReplys() {
+            getComment(
+                this.boardId,
+                (response) => {
+                    let replys = response.data.filter(
+                        (obj) => obj.parentId === this.id
+                    );
+                    this.replys = replys;
+                },
+                (error) => {
+                    console.log("대댓글 불러오기 에러!!", error);
+                }
+            );
+        },
+        toggletwice(){
+            this.toggleReply();
+            this.toggleReply();
         }
     }
 }
@@ -162,5 +186,9 @@ button {
     background-color: var(--white-color);
     border: none;
     outline: none;
+}
+
+.reply_box {
+    margin-top: 50px;
 }
 </style>

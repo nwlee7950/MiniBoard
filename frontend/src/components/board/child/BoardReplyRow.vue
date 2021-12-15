@@ -26,15 +26,15 @@
 <script>
 import Modal from "./ModalComment.vue";
 import {
-    deleteComment,
-    modifyComment,
-} from "@/api/comment.js";
+    mapActions
+} from "vuex";
 export default {
     props: {
         userId: String,
         content: String,
         date: String,
         id: Number,
+        boardId: Number,
     },
     components: {
         Modal,
@@ -46,54 +46,49 @@ export default {
         }
     },
     methods: {
-        onDelete(event) {
-            event.preventDefault();
-            //현재 접속 중인 유저가 댓글 작성자라면
-            this.removeReply();
-        },
+        ...mapActions("replyStore", ["modReply", "delReply"]),
+
+        //UPDATE REPLY
         onUpdate(event) {
             event.preventDefault();
             //현재 접속 중인 유저가 대댓글 작성자라면
             this.updateReply();
         },
-        removeReply() {
-            let id = this.id;
-            deleteComment(
-                id,
-                () => {
-                    let msg = "삭제가 완료되었습니다.";
-                    alert(msg);
-                },
-                (error) => {
-                    console.log(error);
-                }
-            )
-        },
         updateReply() {
             let reply = {
                 userId: this.userId,
                 content: this.rewrite,
-                id: this.id
+                id: this.id,
+                boardId: this.boardId,
             };
-            modifyComment(
-                reply,
-                () => {
-                    let msg = "대댓글 수정이 완료되었습니다.";
-                    alert(msg);
-                    this.removeModal();
-                },
-                (error) => {
-                    console.log(error);
-                }
-            )
+            this.modReply(reply);
+            this.removeModal();
+            this.$emit("changeReplys");
+        },
+
+        //DELETE REPLY
+        onDelete(event) {
+            event.preventDefault();
+            //현재 접속 중인 유저가 댓글 작성자라면
+            this.removeReply();
+        },
+        removeReply() {
+            let reply = {
+                id: this.id,
+                boardId: this.boardId,
+            };
+            this.delReply(reply);
+            this.$emit("changeReplys");
+        },
+
+        //MODAL
+        toggleModal(event) {
+            event.preventDefault();
+            this.removeModal();
         },
         removeModal() {
             this.showModal = !this.showModal;
         },
-        toggleModal(event) {
-            event.preventDefault();
-            this.removeModal();
-        }
     }
 }
 </script>
