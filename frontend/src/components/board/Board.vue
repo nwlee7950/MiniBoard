@@ -4,14 +4,10 @@
     <div class="container">
         <div class="top_bar">
             <div class="search">
-                <b-form-select v-model="selected" class="select_form">
-                    <b-form-select-option :value="null" disabled>-- 검색 조건을 선택해주세요 -- </b-form-select-option>
-                    <b-form-select-option :value="title">제목</b-form-select-option>
-                    <b-form-select-option :value="content">내용</b-form-select-option>
-                    <b-form-select-option :value="author">작성자</b-form-select-option>
+                <b-form-select v-model="selected" :options="options" class="select_form">
                 </b-form-select>
                 <input type="text" v-model="keyword" class="keyword" placeholder="검색어..">
-                <button class="search_btn"><i class="fas fa-search"></i></button>
+                <button class="search_btn" @click="searchByConditions"><i class="fas fa-search"></i></button>
             </div>
             <div class="create_delete">
                 <button class="create option" @click="goWrite"><i class="fas fa-plus"></i>새로운 글 작성</button>
@@ -41,7 +37,10 @@
 
 <script>
 import BoardListRow from './child/BoardListRow';
-import {mapState, mapActions} from "vuex";
+import {
+    mapState,
+    mapActions
+} from "vuex";
 export default {
     components: {
         BoardListRow,
@@ -52,6 +51,23 @@ export default {
             keyword: "",
             currentPage: 1,
             perPage: 20,
+            options: [{
+                    value: null,
+                    text: '-- 검색 조건을 선택해주세요 --'
+                },
+                {
+                    value: 'author',
+                    text: '작성자'
+                },
+                {
+                    value: 'title',
+                    text: '제목'
+                },
+                {
+                    value: 'content',
+                    text: '내용'
+                }
+            ]
         };
     },
     computed: {
@@ -72,12 +88,20 @@ export default {
             this.$router.push({
                 name: 'BoardWrite'
             });
-        }
+        },
+        searchByConditions() {
+            console.log(this.selected, this.keyword);
+            let options = {
+                key: this.selected,
+                word: this.keyword,
+            };
+            this.getAllArticles(options);
+        },
     },
     created() {
         let options = {
-            key: null,
-            word: null,
+            key: this.selected,
+            word: this.keyword,
         };
         this.getAllArticles(options);
     },
