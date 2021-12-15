@@ -11,7 +11,7 @@
         <form @submit="onUpdate">
             <Modal v-if="showModal" @close="showModal = false">
                 <h3 slot="header">
-                    Modify this comment<i class="fas fa-times" @click="removeModal"></i>
+                    Modify this comment<i class="fas fa-times" @click="toggleModal"></i>
                 </h3>
                 <input slot="body" type="text" v-model="rewrite" />
                 <button slot="footer" type="submit">Update</button>
@@ -35,10 +35,8 @@
 import Modal from "./ModalComment.vue";
 import Reply from "./BoardReply.vue";
 import {
-    deleteComment,
-    modifyComment,
-    writeComment
-} from "@/api/comment.js";
+    mapActions
+} from "vuex";
 export default {
     data() {
         return {
@@ -60,70 +58,60 @@ export default {
         date: String,
     },
     methods: {
-        onDelete(event) {
-            event.preventDefault();
-            //현재 접속 중인 유저가 댓글 작성자라면
-            this.removeComment();
-        },
+        ...mapActions("commentStore", ["modComment", "delComment"]),
+        //UPDATE COMMENT
         onUpdate(event) {
             event.preventDefault();
             //현재 접속 중인 유저가 댓글 작성자라면
             this.updateComment();
         },
-        onRegist(event) {
-            event.preventDefault();
-            this.registReply();
-        },
-        removeComment() {
-            let id = this.id;
-            deleteComment(
-                id,
-                () => {
-                    let msg = "삭제가 완료되었습니다.";
-                    alert(msg);
-                },
-                (error) => {
-                    console.log(error);
-                }
-            )
-        },
         updateComment() {
             let comment = {
                 userId: this.userId,
                 content: this.rewrite,
-                id: this.id
+                id: this.id,
+                boardId: this.boardId,
             }
-            modifyComment(
-                comment,
-                () => {
-                    let msg = "댓글 수정이 완료되었습니다.";
-                    alert(msg);
-                    this.removeModal();
-                },
-                (error) => {
-                    console.log(error);
-                }
-            )
+            this.modComment(comment);
+            this.toggleModal();
+        },
+        //DELETE COMMENT
+        onDelete(event) {
+            event.preventDefault();
+            //현재 접속 중인 유저가 댓글 작성자라면
+            this.removeComment();
+        },
+        removeComment() {
+            let comment = {
+                id: this.id,
+                boardId: this.boardId,
+            }
+            this.delComment(comment);
+        },
+        //CREATE REPLY
+        onRegist(event) {
+            event.preventDefault();
+            this.registReply();
         },
         registReply() {
-            let reply = {
-                userId: this.userId,
-                content: this.reply,
-                parentId: this.id,
-                boardId: this.$route.params.articleno
-            };
-            writeComment(
-                reply,
-                () => {
-                    let msg = "대댓글 등록이 완료되었습니다.";
-                    alert(msg);
-                },
-                (error) => {
-                    console.log(error);
-                }
-            )
+            // let reply = {
+            //     userId: this.userId,
+            //     content: this.reply,
+            //     parentId: this.id,
+            //     boardId: this.$route.params.articleno
+            // };
+            // writeComment(
+            //     reply,
+            //     () => {
+            //         let msg = "대댓글 등록이 완료되었습니다.";
+            //         alert(msg);
+            //     },
+            //     (error) => {
+            //         console.log(error);
+            //     }
+            // )
         },
-        removeModal() {
+        toggleModal() {
             this.showModal = !this.showModal;
         },
         toggleReply() {

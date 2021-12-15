@@ -45,18 +45,17 @@
 <script>
 import BoardComment from "./child/BoardComment.vue";
 import {
+    mapState,
+    mapActions
+} from "vuex";
+import {
     getArticle,
     deleteArticle,
 } from "@/api/board";
-import {
-    getComment,
-    writeComment,
-} from "@/api/comment.js";
 export default {
     data() {
         return {
             article: {},
-            comments: [],
             currentPage: 1,
             perPage: 6,
             newComment: "",
@@ -67,6 +66,7 @@ export default {
         BoardComment,
     },
     computed: {
+        ...mapState("commentStore", ["comments"]),
         rows() {
             return this.comments.length;
         },
@@ -78,6 +78,23 @@ export default {
         },
     },
     methods: {
+        ...mapActions("commentStore", ["getComments", "addComment"]),
+        getComment() {
+            this.getComments(this.$route.params.articleno);
+        },
+        createComment(event) {
+            event.preventDefault();
+            this.registComment();
+        },
+        registComment() {
+            let comment = {
+                userId: this.curUser,
+                boardId: this.article.id,
+                content: this.newComment,
+            };
+            this.addComment(comment);
+            this.newComment = "";
+        },
         goModify() {
             this.$router.push({
                 name: 'BoardModify',
@@ -114,26 +131,6 @@ export default {
                 name: "Board"
             });
         },
-        createComment(event){
-            event.preventDefault();
-            this.registComment();
-        },
-        registComment() {
-            writeComment({
-                    userId: this.curUser,
-                    boardId: this.article.id,
-                    content: this.newComment,
-                },
-                () => {
-                    let msg = "댓글 등록이 완료되었습니다.";
-                    alert(msg);
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
-            this.newComment = "";
-        },
     },
     created() {
         getArticle(
@@ -145,16 +142,7 @@ export default {
                 console.log("에러발생!!", error);
             }
         );
-        getComment(
-            this.$route.params.articleno,
-            (response) => {
-                let comments = response.data.filter(comment => comment.parentId === 0);
-                this.comments = comments;
-            },
-            (error) => {
-                console.log("에러발생!!", error);
-            }
-        )
+        this.getComment();
     },
 
 }
