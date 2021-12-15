@@ -22,23 +22,14 @@
 
 <script>
 import {
-    writeArticle,
-    getArticle,
-    modifyArticle,
-} from "@/api/board";
+    mapState, mapActions
+} from "vuex";
 export default {
-    data() {
-        return {
-            article: {
-                userId: "",
-                title: "",
-                content: "",
-                notice: false,
-                id: 0,
-            }
-        }
+    computed:{
+        ...mapState("boardStore", ["article"]),
     },
     methods: {
+        ...mapActions("boardStore", ["resetArticle", "getOneArticle", "addArticle", "modArticle"]),
         onSubmit(event) {
             event.preventDefault();
 
@@ -73,40 +64,28 @@ export default {
                 name: "Board"
             });
         },
+
+        //CREATE_ARTICLE
         registArticle() {
-            writeArticle({
-                    userId: this.article.userId,
-                    title: this.article.title,
-                    content: this.article.content,
-                    notice: this.article.notice,
-                },
-                () => {
-                    let msg = "등록이 완료되었습니다.";
-                    alert(msg);
-                    this.moveList();
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
+            let article = {
+                userId: this.article.userId,
+                title: this.article.title,
+                content: this.article.content,
+                notice: this.article.notice,
+            }
+            this.addArticle(article);
+            this.moveList();
         },
         updateArticle() {
-            modifyArticle({
-                    userId: this.article.userId,
-                    title: this.article.title,
-                    content: this.article.content,
-                    notice: this.article.notice,
-                    id: this.article.id,
-                },
-                () => {
-                    let msg = "수정이 완료되었습니다.";
-                    alert(msg);
-                    this.moveList();
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
+            let article = {
+                userId: this.article.userId,
+                title: this.article.title,
+                content: this.article.content,
+                notice: this.article.notice,
+                id: this.article.id,
+            };
+            this.modArticle(article);
+            this.moveList();
         },
         moveList() {
             this.$router.push({
@@ -120,20 +99,9 @@ export default {
         },
     },
     created() {
+        this.resetArticle();
         if (this.type === "modify") {
-            getArticle(
-                this.$route.params.articleno,
-                (response) => {
-                    this.article.userId = response.data.userId;
-                    this.article.title = response.data.title;
-                    this.article.content = response.data.content;
-                    this.article.notice = response.data.notice;
-                    this.article.id = this.$route.params.articleno;
-                },
-                (error) => {
-                    console.log("에러발생!!", error);
-                }
-            );
+            this.getOneArticle(this.$route.params.articleno);
         }
     },
 

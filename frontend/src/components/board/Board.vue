@@ -41,9 +41,7 @@
 
 <script>
 import BoardListRow from './child/BoardListRow';
-import {
-    listArticle
-} from "@/api/board.js";
+import {mapState, mapActions} from "vuex";
 export default {
     components: {
         BoardListRow,
@@ -52,12 +50,12 @@ export default {
         return {
             selected: null,
             keyword: "",
-            articles: [],
             currentPage: 1,
             perPage: 20,
         };
     },
     computed: {
+        ...mapState("boardStore", ["articles"]),
         rows() {
             return this.articles.length;
         },
@@ -69,6 +67,7 @@ export default {
         },
     },
     methods: {
+        ...mapActions("boardStore", ["getAllArticles"]),
         goWrite() {
             this.$router.push({
                 name: 'BoardWrite'
@@ -76,19 +75,11 @@ export default {
         }
     },
     created() {
-        let param = {
+        let options = {
             key: null,
             word: null,
         };
-        listArticle(
-            param,
-            (response) => {
-                this.articles = response.data;
-            },
-            (error) => {
-                console.log(error);
-            }
-        );
+        this.getAllArticles(options);
     },
 
 }

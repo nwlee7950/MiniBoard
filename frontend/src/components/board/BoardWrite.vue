@@ -20,7 +20,6 @@ export default {
     display: flex;
     flex-direction: column;
 }
-
 .title {
     font-size: 70px;
     width: 100%;

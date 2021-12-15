@@ -48,14 +48,9 @@ import {
     mapState,
     mapActions
 } from "vuex";
-import {
-    getArticle,
-    deleteArticle,
-} from "@/api/board";
 export default {
     data() {
         return {
-            article: {},
             currentPage: 1,
             perPage: 6,
             newComment: "",
@@ -66,6 +61,7 @@ export default {
         BoardComment,
     },
     computed: {
+        ...mapState("boardStore", ["article"]),
         ...mapState("commentStore", ["comments"]),
         rows() {
             return this.comments.length;
@@ -78,6 +74,7 @@ export default {
         },
     },
     methods: {
+        ...mapActions("boardStore", ["getOneArticle", "delArticle"]),
         ...mapActions("commentStore", ["getComments", "addComment"]),
         getComment() {
             this.getComments(this.$route.params.articleno);
@@ -113,18 +110,11 @@ export default {
             //현재 접속 중인 유저가 글 작성자라면
             this.removeArticle();
         },
+
+        //DELETE_ARTICLE
         removeArticle() {
-            deleteArticle(
-                this.$route.params.articleno,
-                () => {
-                    let msg = "삭제가 완료되었습니다.";
-                    alert(msg);
-                    this.moveList();
-                },
-                (error) => {
-                    console.log(error);
-                }
-            )
+            this.delArticle(this.$route.params.articleno);
+            this.moveList();
         },
         moveList() {
             this.$router.push({
@@ -133,15 +123,7 @@ export default {
         },
     },
     created() {
-        getArticle(
-            this.$route.params.articleno,
-            (response) => {
-                this.article = response.data;
-            },
-            (error) => {
-                console.log("에러발생!!", error);
-            }
-        );
+        this.getOneArticle(this.$route.params.articleno);
         this.getComment();
     },
 
