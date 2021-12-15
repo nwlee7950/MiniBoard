@@ -36,7 +36,7 @@
                 <board-comment v-for="(comment, index) in itemsForList" :key="index" v-bind="comment" class="commentItem" />
             </div>
         </div>
-        <b-pagination class="page" v-model="currentPage" :total-rows="rows" :per-page="perPage" aria-controls="my-table">
+        <b-pagination class="page" v-model="currentPage" :total-rows="rows" :per-page="perPage" aria-controls="my-table" align="center">
         </b-pagination>
     </div>
 </div>
@@ -52,7 +52,7 @@ export default {
     data() {
         return {
             currentPage: 1,
-            perPage: 6,
+            perPage: 5,
             newComment: "",
             curUser: "jisu",
         };

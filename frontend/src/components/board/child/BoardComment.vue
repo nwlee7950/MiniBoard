@@ -133,7 +133,7 @@ export default {
                     let replys = response.data.filter(
                         (obj) => obj.parentId === this.id
                     );
-                    this.replys = replys;
+                    this.replys = replys.reverse();
                 },
                 (error) => {
                     console.log("대댓글 불러오기 에러!!", error);

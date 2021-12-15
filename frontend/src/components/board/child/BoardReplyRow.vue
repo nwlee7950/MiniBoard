@@ -69,6 +69,7 @@ export default {
                 boardId: this.boardId,
             };
             this.modReply(reply);
+            this.rewrite = "";
             this.removeModal();
             this.$emit("changeReplys");
         },

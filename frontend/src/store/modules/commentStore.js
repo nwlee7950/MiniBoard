@@ -13,7 +13,7 @@ const commentStore = {
   getter: {},
   mutations: {
     SET_COMMENTS: (state, comments) => {
-      state.comments = comments;
+      state.comments = comments.reverse();
     },
   },
   actions: {

@@ -20,7 +20,7 @@ const replyStore = {
         reply,
         () => {
           let msg = "대댓글 등록이 완료되었습니다.";
-          alert(msg);
+          console.log(msg);
         },
         (error) => {
           console.log("대댓글 추가 에러!!", error);
@@ -33,7 +33,7 @@ const replyStore = {
         reply,
         () => {
           let msg = "대댓글 수정이 완료되었습니다.";
-          alert(msg);
+          console.log(msg);
         },
         (error) => {
           console.log("대댓글 수정 에러!!", error);
@@ -46,7 +46,7 @@ const replyStore = {
         reply.id,
         () => {
           let msg = "삭제가 완료되었습니다.";
-          alert(msg);
+          console.log(msg);
         },
         (error) => {
           console.log("대댓글 삭제 에러!!", error);
