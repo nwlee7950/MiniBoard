@@ -55,7 +55,7 @@ export default {
                     text: '-- 검색 조건을 선택해주세요 --'
                 },
                 {
-                    value: 'author',
+                    value: 'user_id',
                     text: '작성자'
                 },
                 {
@@ -65,6 +65,10 @@ export default {
                 {
                     value: 'content',
                     text: '내용'
+                },
+                {
+                    value: 'title_content',
+                    text: '제목 + 내용'
                 }
             ]
         };
