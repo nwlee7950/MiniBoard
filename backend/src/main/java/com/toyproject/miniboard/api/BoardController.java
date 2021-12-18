@@ -55,7 +55,7 @@ public class BoardController {
         return new ResponseEntity<List<Board>>(boardService.boardList(boardParameterDto), HttpStatus.OK);
     }
 
-    @ApiOperation(value="게시글번호에 맞는 게시글을 반환한다.",response= List.class)
+    @ApiOperation(value="게시글번호에 맞는 게시글을 반환한다.",response= Board.class)
     @GetMapping("/{id}")
     public ResponseEntity<Board> getBoard(@PathVariable @ApiParam(value = "조회할 글 번호", required = true) long id){
         return new ResponseEntity<Board>(boardService.getBoard(id),HttpStatus.OK);

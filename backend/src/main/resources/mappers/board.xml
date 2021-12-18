@@ -52,7 +52,7 @@
         where id = #{id}
     </update>
 
-    <select id="getBoard" resultType="Board">
+    <select id="getBoard" parameterType="long" resultType="Board">
         select *
         from board
         where id = #{id}
