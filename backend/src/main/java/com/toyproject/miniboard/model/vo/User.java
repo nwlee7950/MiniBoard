@@ -11,13 +11,13 @@ import lombok.ToString;
 public class User {
     private String id;
     private String password;
-    private String role;
+    private Role role;
     private String name;
     private String oauthType;
     private String profileImage;
 
     @Builder
-    public User(String id, String password, String role, String name, String oauthType, String profileImage){
+    public User(String id, String password, Role role, String name, String oauthType, String profileImage){
         this.id = id;
         this.password = password;
         this.role = role;
