@@ -39,12 +39,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //세션 off
 
+
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "api/users").authenticated()
-                .antMatchers(HttpMethod.POST, "api/boards", "/api/comments").authenticated()
-                .antMatchers(HttpMethod.PUT, "api/boards", "api/comments", "api/users").authenticated()
-                .antMatchers(HttpMethod.DELETE, "api/boards", "api/comments", "api/users").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/users/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/boards", "/api/comments").authenticated()
+                .antMatchers(HttpMethod.PUT, "/api/boards", "/api/comments", "/api/users").authenticated()
+                .antMatchers(HttpMethod.DELETE, "/api/boards/**", "/api/comments/**", "/api/users/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
                 .anyRequest().permitAll()
 
                 .and()
