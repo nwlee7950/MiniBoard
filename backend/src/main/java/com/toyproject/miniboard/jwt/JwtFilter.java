@@ -14,6 +14,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+//JwtFilter : API에 요청이 오게되면 헤더에 토큰이 있나없나 확인
 @Slf4j
 @RequiredArgsConstructor
 public class JwtFilter extends GenericFilterBean {
