@@ -23,13 +23,13 @@
         where id = #{id}
     </delete>
 
-    <select id="findUserById" parameterType="String" resultType="int">
+    <select id="selectCountByUserId" parameterType="String" resultType="int">
         select count(*)
         from user
         where id = #{id}
     </select>
 
-    <select id="getUser" parameterType="String" resultType="User">
+    <select id="selectByUserId" parameterType="String" resultType="User">
         select *
         from user
         where id = #{id}

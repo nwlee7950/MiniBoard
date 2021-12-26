@@ -10,6 +10,6 @@ public interface UserService {
     public void register(UserRegisterDto userRegisterDto) throws Exception;
     public void updateUser(UserDto userDto);
     public void deleteUser(String id);
-    public User getUser(String id);
+    public User selectByUserId(String id);
     public List<User> userList();
 }

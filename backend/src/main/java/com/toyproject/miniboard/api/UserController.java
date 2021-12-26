@@ -57,12 +57,13 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         //해당 인증 정보를 기반으로 jwt 토큰을 생성
         String jwt = tokenProvider.createToken(authentication);
+        log.debug("로그인 토큰정보 : {}", jwt);
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
         //생성된 Token을 Response Header에 넣고, Token vo 객체를 이용해 Response Body에도 넣어서 리턴
-        return new ResponseEntity<Token>(new Token(jwt), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(new Token(jwt), httpHeaders, HttpStatus.OK);
     }
 
     @ApiOperation(value = "회원 정보를 수정한다.", response = String.class)
@@ -84,7 +85,7 @@ public class UserController {
     @ApiOperation(value="회원 한 명의 정보를 반환한다.",response= User.class)
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable @ApiParam(value = "조회할 회원의 ID", required = true) String id){
-        return new ResponseEntity<User>(userService.getUser(id),HttpStatus.OK);
+        return new ResponseEntity<User>(userService.selectByUserId(id),HttpStatus.OK);
     }
 
     @ApiOperation(value = "회원 목록을 반환한다.", response = List.class)

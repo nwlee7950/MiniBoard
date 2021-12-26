@@ -22,7 +22,7 @@ public class UserServiceImpl implements  UserService {
 
     @Override
     public void register(UserRegisterDto userRegisterDto) throws Exception{
-        if(userMapper.findUserById(userRegisterDto.getId()) != 0){
+        if(userMapper.selectCountByUserId(userRegisterDto.getId()) != 0){
             throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
         }
 
@@ -56,8 +56,8 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    public User getUser(String id) {
-        return userMapper.getUser(id);
+    public User selectByUserId(String id) {
+        return userMapper.selectByUserId(id);
     }
 
     @Override
