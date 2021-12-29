@@ -7,6 +7,9 @@ spring:
     url: jdbc:mysql://localhost:3306/miniboard?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
     username: ssafy
     password: ssafy
+  devtools:
+    restart:
+      enabled: true
 
 mybatis:
   type-aliases-package: com.toyproject.miniboard.model
