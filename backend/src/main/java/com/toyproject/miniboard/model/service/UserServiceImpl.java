@@ -10,8 +10,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.javassist.bytecode.DuplicateMemberException;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -21,10 +27,30 @@ public class UserServiceImpl implements  UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void register(UserRegisterDto userRegisterDto) throws Exception{
+    @Transactional
+    public void register(UserRegisterDto userRegisterDto, MultipartFile multipartFile) throws Exception{
         if(userMapper.selectCountByUserId(userRegisterDto.getId()) != 0){
             throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
         }
+
+        String separ = File.separator;
+
+        File file = new File("");
+        String rootPath = file.getAbsolutePath().split("src")[0];
+
+        String savePath = rootPath + separ + "src" + separ + "main" + separ + "resources" + separ + "profileImg";
+        if(!new File(savePath).exists()){
+            try{
+                new File(savePath).mkdirs();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        String originFileName = multipartFile.getOriginalFilename();
+        String saveFileName = UUID.randomUUID().toString() + originFileName.substring(originFileName.lastIndexOf("."));
+
+        String filePath = savePath + separ + saveFileName;
+        multipartFile.transferTo(new File(filePath));
 
         User user = User.builder()
                 .id(userRegisterDto.getId())
@@ -32,14 +58,36 @@ public class UserServiceImpl implements  UserService {
                 .role(Role.USER)
                 .name(userRegisterDto.getName())
                 .oauthType(userRegisterDto.getOauthType())
-                .profileImage(userRegisterDto.getProfileImage())
+                .profileImage(saveFileName)
                 .build();
 
         userMapper.register(user);
     }
 
     @Override
-    public void updateUser(UserDto userDto) {
+    @Transactional
+    public void updateUser(UserDto userDto, MultipartFile multipartFile) throws Exception{
+        String separ = File.separator;
+
+        File file = new File("");
+        String rootPath = file.getAbsolutePath().split("src")[0];
+        String savePath = rootPath + separ + "src" + separ + "main" + separ + "resources" + separ + "profileImg";
+
+        File originFile = new File(savePath + separ + userDto.getProfileImage());
+
+        if(originFile.exists()){
+            originFile.delete();
+            log.info("이전 프로필 사진 삭제");
+        }
+
+        String originFileName = multipartFile.getOriginalFilename();
+        String saveFileName = UUID.randomUUID().toString() + originFileName.substring(originFileName.lastIndexOf("."));
+
+        String filePath = savePath + separ + saveFileName;
+        multipartFile.transferTo(new File(filePath));
+
+        userDto.setProfileImage(saveFileName);
+
         User user = User.builder()
                 .id(userDto.getId())
                 .password(passwordEncoder.encode(userDto.getPassword()))

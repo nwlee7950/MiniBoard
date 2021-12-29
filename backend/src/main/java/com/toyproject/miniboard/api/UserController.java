@@ -5,6 +5,7 @@ import com.toyproject.miniboard.jwt.TokenProvider;
 import com.toyproject.miniboard.model.dto.UserDto;
 import com.toyproject.miniboard.model.dto.UserLoginDto;
 import com.toyproject.miniboard.model.dto.UserRegisterDto;
+import com.toyproject.miniboard.model.service.CustomUserDetailsService;
 import com.toyproject.miniboard.model.service.UserService;
 import com.toyproject.miniboard.model.vo.Token;
 import com.toyproject.miniboard.model.vo.User;
@@ -21,6 +22,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -38,9 +40,10 @@ public class UserController {
 
     @ApiOperation(value = "회원 가입을 한다.", response = String.class)
     @PostMapping()
-    public ResponseEntity<String> register(@Valid @RequestBody UserRegisterDto userRegisterDto) throws Exception {
+    public ResponseEntity<String> register(@Valid @RequestPart(value = "userRegisterDto") UserRegisterDto userRegisterDto,
+                                           @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws Exception {
         log.info("register user : {}", userRegisterDto);
-        userService.register(userRegisterDto);
+        userService.register(userRegisterDto, multipartFile);
         return new ResponseEntity<String>(HttpStatus.OK);
     }
 
@@ -68,9 +71,10 @@ public class UserController {
 
     @ApiOperation(value = "회원 정보를 수정한다.", response = String.class)
     @PutMapping()
-    public ResponseEntity<String> updateUser(@RequestBody @ApiParam(value = "수정할 회원 정보", required = true)UserDto userDto) throws Exception{
+    public ResponseEntity<String> updateUser(@RequestPart(value = "userDto") @ApiParam(value = "수정할 회원 정보", required = true)UserDto userDto,
+                                             @RequestPart(value = "file", required = false) @ApiParam(value = "프로필 사진") MultipartFile multipartFile) throws Exception{
         log.debug("update user : {}", userDto);
-        userService.updateUser(userDto);
+        userService.updateUser(userDto, multipartFile);
         return new ResponseEntity<String>(HttpStatus.OK);
     }
 
