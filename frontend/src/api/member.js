@@ -7,6 +7,7 @@ function getUsers(success, fail) {
 }
 
 function getUser(userid, success, fail) {
+  api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
   api.get(`/users/${userid}`).then(success).catch(fail);
 }
 
