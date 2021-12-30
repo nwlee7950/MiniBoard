@@ -50,15 +50,25 @@ public class UserServiceImpl implements  UserService {
         String filePath = savePath + separ + saveFileName;
         multipartFile.transferTo(new File(filePath));
 
-        User user = User.builder()
-                .id(userRegisterDto.getId())
-                .password(passwordEncoder.encode(userRegisterDto.getPassword()))
-                .role(Role.USER)
-                .name(userRegisterDto.getName())
-                .profileImage(saveFileName)
-                .build();
-
-        userMapper.register(user);
+        if(userRegisterDto.getId().equals("admin")){
+            User user = User.builder()
+                    .id(userRegisterDto.getId())
+                    .password(passwordEncoder.encode(userRegisterDto.getPassword()))
+                    .role(Role.ADMIN)
+                    .name(userRegisterDto.getName())
+                    .profileImage(saveFileName)
+                    .build();
+            userMapper.register(user);
+        } else{
+            User user = User.builder()
+                    .id(userRegisterDto.getId())
+                    .password(passwordEncoder.encode(userRegisterDto.getPassword()))
+                    .role(Role.USER)
+                    .name(userRegisterDto.getName())
+                    .profileImage(saveFileName)
+                    .build();
+            userMapper.register(user);
+        }
     }
 
     @Override
