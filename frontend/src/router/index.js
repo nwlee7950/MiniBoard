@@ -16,21 +16,15 @@ import BoardWrite from "../components/board/BoardWrite.vue";
 import BoardView from "../components/board/BoardView.vue";
 import BoardModify from "../components/board/BoardModify.vue";
 
+import AdminPage from '@/components/admin/AdminPage.vue';
+
 import store from "@/store/index.js";
-// import memberStore from "@/store/modules/memberStore.js";
 
 Vue.use(VueRouter);
 
 const onlyAuthUser = async (to, from, next) => {
-  // console.log(store);
   const checkUserInfo = store.getters["memberStore/checkUserInfo"];
   console.log(checkUserInfo);
-//   const getUserInfo = store._actions["memberStore/getUserInfo"];
-//   let token = sessionStorage.getItem("access-token");
-//   if (checkUserInfo === null && token) {
-//     memberStore.dispatch("getUserInfo", token);
-//     console.log("회원 정보 반영");
-//   }
   if (checkUserInfo === null) {
     alert("로그인이 필요한 페이지입니다..");
     router.push({ name: "Login" });
@@ -113,7 +107,14 @@ const routes = [
             component: UpdateMember,
           },
         ],
-      },
+    },
+    //ADMIN
+    {
+      path: "/main/admin",
+      name: "AdminPage",
+      beforeEnter: onlyAuthUser,
+      component: AdminPage,
+    },
     ],
   },
 ];

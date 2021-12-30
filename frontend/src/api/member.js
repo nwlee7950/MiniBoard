@@ -20,8 +20,8 @@ function getUser(userid, success, fail) {
   api.get(`/users/${userid}`).then(success).catch(fail);
 }
 
-function registUser(user, success, fail) {
-  api.post(`/users`, JSON.stringify(user)).then(success).catch(fail);
+function registUser(data, success, fail) {
+  api.post(`/users`, data).then(success).catch(fail);
 }
 
 function modifyUser(user, success, fail) {
@@ -30,7 +30,7 @@ function modifyUser(user, success, fail) {
 }
 
 function deleteUser(userid, success, fail) {
-    console.log("member");
+  console.log("member");
   setAuthToken();
   api.delete(`/users/${userid}`).then(success).catch(fail);
 }

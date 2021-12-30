@@ -3,7 +3,11 @@
     <router-link :to="{name:'Home'}" class="logo link"><i class="fas fa-stream"></i> Mini Board</router-link>
     <div class="menus">
         <router-link :to="{name:'Board'}" class="board link"><i class="far fa-keyboard"></i> Board</router-link>
+        <div class="admin" v-if="isAdmin">
+            <router-link :to="{name:'AdminPage'}" class=" admin link">회원관리</router-link>
+        </div>
         <div class="in" v-if="isLogin">
+            <p>{{userInfo.name}}님 환영합니다 :)</p>
             <router-link :to="{name:'MyPage'}" class="mypage link"><i class="far fa-user-circle"></i> My Page</router-link>
             <button @click.prevent="logoutUser"><i class="far fa-user-circle"></i>로그아웃</button>
         </div>
@@ -22,7 +26,7 @@ import {
 export default {
     name: 'NavBar',
     computed: {
-        ...mapState("memberStore", ["isLogin"]),
+        ...mapState("memberStore", ["isLogin", "isAdmin", "userInfo"]),
     },
     methods: {
         ...mapMutations("memberStore", ["SET_IS_LOGIN", "SET_USER_INFO"]),
@@ -67,5 +71,8 @@ export default {
 
 .dropdown {
     position: relative;
+}
+.in{
+    display: flex;
 }
 </style>

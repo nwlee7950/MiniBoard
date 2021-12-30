@@ -1,6 +1,6 @@
 import jwt_decode from "jwt-decode";
 import {
-  //   getUsers,
+    getUsers,
   getUser,
   registUser,
   modifyUser,
@@ -16,6 +16,8 @@ const memberStore = {
     userInfo: null,
     isUpdate: false,
     isDeleted: false,
+    isAdmin:false,
+    userList:null,
   },
   getters: {
     checkUserInfo: function (state) {
@@ -31,6 +33,11 @@ const memberStore = {
     },
     SET_USER_INFO: (state, userInfo) => {
       state.userInfo = userInfo;
+      if(userInfo.role === 'ADMIN'){
+          state.isAdmin = true;
+      }else{
+          state.isAdmin = false;
+      }
     },
     SET_IS_DELETED: (state, isDeleted) => {
       state.isDeleted = isDeleted;
@@ -38,17 +45,20 @@ const memberStore = {
     SET_IS_UPDATE: (state, isUpdate) => {
       state.isUpdate = isUpdate;
     },
+    SET_USER_LIST: (state, userList) => {
+        state.userList = userList;
+    }
   },
   actions: {
     async userConfirm({ commit, dispatch }, user) {
       await loginUser(
         user,
         (res) => {
-            let token = res.data.token;
-            commit("SET_IS_LOGIN", true);
-            sessionStorage.setItem("access-token", token);
-            console.log("로그인 스토어 성공");
-            dispatch('getUserInfo', token);
+          let token = res.data.token;
+          commit("SET_IS_LOGIN", true);
+          sessionStorage.setItem("access-token", token);
+          console.log("로그인 스토어 성공");
+          dispatch("getUserInfo", token);
         },
         () => {
           console.log("로그인 스토어 실패");
@@ -56,9 +66,13 @@ const memberStore = {
         }
       );
     },
-    async userRegister({ commit }, user) {
+    async userRegister({ commit }, user, file) {
+      let formData = new FormData();
+      formData.append("userRegisterDto", JSON.stringify(user));
+      formData.append("file", file);
+      console.log(formData);
       await registUser(
-        user,
+        formData,
         (res) => {
           console.log(res);
           commit("SET_IS_REGISTER", true);
@@ -70,7 +84,7 @@ const memberStore = {
       );
     },
     getUserInfo({ commit }, token) {
-        console.log("겟유저인포 들어옴");
+      console.log("겟유저인포 들어옴");
       let decode_token = jwt_decode(token);
       console.log(decode_token);
       getUser(
@@ -90,17 +104,16 @@ const memberStore = {
       await deleteUser(
         userid,
         (res) => {
-            console.log("memberstore");
+          console.log("memberstore");
           commit("SET_IS_DELETED", true);
           console.log(res);
         },
         () => {}
       );
     },
-    async userUpdate({ commit }, user, file) {
+    async userUpdate({ commit }, user) {
       await modifyUser(
         user,
-        file,
         (res) => {
           commit("SET_IS_UPDATE", true);
           console.log(res);
@@ -108,6 +121,14 @@ const memberStore = {
         () => {}
       );
     },
+    async getUserList({commit}){
+        await getUsers(
+            (res) => {
+                commit("SET_USER_LIST", res.data);
+            },
+            () => {}
+        )
+    }
   },
 };
 
