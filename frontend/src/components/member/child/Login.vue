@@ -31,6 +31,7 @@ export default {
         ...mapActions("memberStore", ["userConfirm", "getUserInfo"]),
         async confirm() {
             await this.userConfirm(this.user);
+            this.$router.push({name:"Board"});
         },
     }
 }

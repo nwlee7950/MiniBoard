@@ -26,17 +26,20 @@ const memberStore = {
   },
   mutations: {
     SET_IS_LOGIN: (state, isLogin) => {
+        console.log("three");
       state.isLogin = isLogin;
     },
     SET_IS_REGISTER: (state, isRegister) => {
       state.isRegister = isRegister;
     },
     SET_USER_INFO: (state, userInfo) => {
+        console.log("four");
       state.userInfo = userInfo;
-      if(userInfo.role === 'ADMIN'){
+      console.log(userInfo);
+        if(userInfo === null){
+            state.isAdmin = false;
+        } else if(userInfo.role === 'ADMIN'){
           state.isAdmin = true;
-      }else{
-          state.isAdmin = false;
       }
     },
     SET_IS_DELETED: (state, isDeleted) => {
@@ -128,6 +131,14 @@ const memberStore = {
             },
             () => {}
         )
+    },
+    logout({commit}, data){
+        console.log("two");
+        commit("SET_IS_LOGIN", data.isLogin);
+        console.log(data);
+        commit("SET_USER_INFO", data.userInfo);
+        sessionStorage.removeItem("access-token");
+        console.log("five");
     }
   },
 };

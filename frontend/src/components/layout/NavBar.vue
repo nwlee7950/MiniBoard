@@ -21,7 +21,7 @@
 <script>
 import {
     mapState,
-    mapMutations,
+    mapActions,
 } from 'vuex';
 export default {
     name: 'NavBar',
@@ -29,12 +29,17 @@ export default {
         ...mapState("memberStore", ["isLogin", "isAdmin", "userInfo"]),
     },
     methods: {
-        ...mapMutations("memberStore", ["SET_IS_LOGIN", "SET_USER_INFO"]),
-        logoutUser() {
-            this.SET_IS_LOGIN(false);
-            this.SET_USER_INFO(null);
-            sessionStorage.removeItem("access-token");
-            
+        ...mapActions("memberStore", ["logout"]),
+        async logoutUser() {
+            console.log("one");
+            let data = {
+                "isLogin" : false,
+                "userInfo" : null
+            }
+            await this.logout(data);
+            console.log("six");
+            this.$router.push({name:"Home"});
+            console.log("seven");
         },
     }
 }
