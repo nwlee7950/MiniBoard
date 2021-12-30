@@ -60,7 +60,6 @@ CREATE TABLE IF NOT EXISTS `miniboard`.`user` (
                                                   `password` VARCHAR(100) NOT NULL,
                                                   `role` VARCHAR(15) NULL DEFAULT NULL,
                                                   `name` VARCHAR(15) NULL DEFAULT NULL,
-                                                  `oauth_type` VARCHAR(15) NULL DEFAULT NULL,
                                                   `profile_image` VARCHAR(100) NULL DEFAULT NULL,
                                                   PRIMARY KEY (`id`),
                                                   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)

@@ -6,7 +6,7 @@
     <insert id="register" parameterType="User">
         INSERT
         INTO user
-        VALUES (#{id}, #{password}, #{role}, #{name}, #{oauthType}, #{profileImage})
+        VALUES (#{id}, #{password}, #{role}, #{name}, #{profileImage})
     </insert>
 
     <update id="updateUser" parameterType="User">
