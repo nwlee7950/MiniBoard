@@ -13,16 +13,14 @@ public class User {
     private String password;
     private Role role;
     private String name;
-    private String oauthType;
     private String profileImage;
 
     @Builder
-    public User(String id, String password, Role role, String name, String oauthType, String profileImage){
+    public User(String id, String password, Role role, String name, String profileImage){
         this.id = id;
         this.password = password;
         this.role = role;
         this.name = name;
-        this.oauthType = oauthType;
         this.profileImage = profileImage;
     }
 }

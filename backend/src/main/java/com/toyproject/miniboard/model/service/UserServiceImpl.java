@@ -57,7 +57,6 @@ public class UserServiceImpl implements  UserService {
                 .password(passwordEncoder.encode(userRegisterDto.getPassword()))
                 .role(Role.USER)
                 .name(userRegisterDto.getName())
-                .oauthType(userRegisterDto.getOauthType())
                 .profileImage(saveFileName)
                 .build();
 

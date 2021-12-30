@@ -21,8 +21,6 @@ public class UserDto {
     private String role;
     @ApiModelProperty(value = "회원 이름")
     private String name;
-    @ApiModelProperty(value = "회원 로그인 구분")
-    private String oauthType;
     @ApiModelProperty(value = "회원 프로필 사진")
     private String profileImage;
 }

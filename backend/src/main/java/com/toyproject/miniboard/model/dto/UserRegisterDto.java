@@ -29,7 +29,6 @@ public class UserRegisterDto {
     @Size(min = 2, max = 10)
     private String name;
 
-    private String oauthType;
     private String profileImage;
 
 }
