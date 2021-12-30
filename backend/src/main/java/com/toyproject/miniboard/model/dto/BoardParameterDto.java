@@ -11,7 +11,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-@ApiModel(value = "게시판 추가적인 정보", description = "부가적인 파라미터정보.")
+@ApiModel(value = "BoardParameterDto : 게시판 추가적인 정보", description = "부가적인 파라미터정보")
 public class BoardParameterDto {
     @ApiModelProperty(value = "검색 조건")
     private String key;

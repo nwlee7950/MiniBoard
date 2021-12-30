@@ -49,7 +49,7 @@ public class UserController {
 
     @ApiOperation(value = "로그인", response = Token.class)
     @PostMapping("/login")
-    public ResponseEntity<Token> login(@Valid @RequestBody UserLoginDto userLoginDto) throws Exception{
+    public ResponseEntity<Token> login(@Valid @ApiParam(value = "id와 password", required = true) @RequestBody UserLoginDto userLoginDto) throws Exception{
         log.info("call login : {}", userLoginDto);
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(userLoginDto.getId(), userLoginDto.getPassword());
@@ -71,7 +71,7 @@ public class UserController {
 
     @ApiOperation(value = "회원 정보를 수정한다.", response = String.class)
     @PutMapping()
-    public ResponseEntity<String> updateUser(@RequestPart(value = "userDto") @ApiParam(value = "수정할 회원 정보", required = true)UserDto userDto,
+    public ResponseEntity<String> updateUser(@Valid @RequestPart(value = "userDto") @ApiParam(value = "수정할 회원 정보", required = true)UserDto userDto,
                                              @RequestPart(value = "file", required = false) @ApiParam(value = "프로필 사진") MultipartFile multipartFile) throws Exception{
         log.debug("update user : {}", userDto);
         userService.updateUser(userDto, multipartFile);

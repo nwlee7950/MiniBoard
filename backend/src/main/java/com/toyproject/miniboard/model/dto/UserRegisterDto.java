@@ -20,15 +20,14 @@ public class UserRegisterDto {
     @Size(min = 3, max = 20)
     private String id;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull
     @Size(min = 3, max = 100)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @NotNull
-    @Size(min = 2, max = 10)
+    @Size(min = 3, max = 15)
     private String name;
 
     private String profileImage;
-
 }

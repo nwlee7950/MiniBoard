@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -26,7 +27,7 @@ public class BoardController {
 
     @ApiOperation(value = "게시글을 추가한다.", response = String.class)
     @PostMapping
-    public ResponseEntity<Board> insertBoard(@RequestBody @ApiParam(value = "게시글 정보", required = true) BoardDto boardDto) throws Exception {
+    public ResponseEntity<Board> insertBoard(@Valid @RequestBody @ApiParam(value = "게시글 정보", required = true) BoardDto boardDto) throws Exception {
         log.info("insert Board : {}", boardDto);
         boardService.insertBoard(boardDto);
         return new ResponseEntity<Board>(HttpStatus.CREATED);
@@ -42,7 +43,7 @@ public class BoardController {
 
     @ApiOperation(value = "게시글을 수정한다.", response = String.class)
     @PutMapping
-    public ResponseEntity<String> updateBoard(@RequestBody @ApiParam(value = "수정할 글 정보", required = true) BoardDto boardDto) throws Exception{
+    public ResponseEntity<String> updateBoard(@Valid @RequestBody @ApiParam(value = "수정할 글 정보", required = true) BoardDto boardDto) throws Exception{
         log.debug("update Board:{}",boardDto);
         boardService.updateBoard(boardDto);
         return new ResponseEntity<String>(HttpStatus.OK);
@@ -50,7 +51,7 @@ public class BoardController {
 
     @ApiOperation(value = "게시글 목록을 반환한다.", response = List.class)
     @GetMapping
-    public ResponseEntity<List<Board>> boardList(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = false) BoardParameterDto boardParameterDto) throws  Exception{
+    public ResponseEntity<List<Board>> boardList(@Valid @ApiParam(value = "게시글을 얻기위한 부가정보.", required = false) BoardParameterDto boardParameterDto) throws  Exception{
         log.info("board List:{}", boardParameterDto);
         return new ResponseEntity<List<Board>>(boardService.boardList(boardParameterDto), HttpStatus.OK);
     }

@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -25,7 +26,7 @@ public class CommentController {
 
     @ApiOperation(value = "댓글을 등록한다.", response = String.class)
     @PostMapping()
-    public ResponseEntity<CommentDto> insertComment(@RequestBody @ApiParam(value = "댓글 정보", required = true) CommentDto commentDto) throws Exception {
+    public ResponseEntity<CommentDto> insertComment(@Valid @RequestBody @ApiParam(value = "댓글 정보", required = true) CommentDto commentDto) throws Exception {
         log.info("insert Comment : {}", commentDto);
         commentService.insertComment(commentDto);
         return new ResponseEntity<CommentDto>(HttpStatus.CREATED);
@@ -33,7 +34,7 @@ public class CommentController {
 
     @ApiOperation(value = "댓글을 수정한다.", response = String.class)
     @PutMapping
-    public ResponseEntity<String> updateComment(@RequestBody @ApiParam(value = "수정할 댓글 정보", required = true) CommentDto commentDto) throws Exception {
+    public ResponseEntity<String> updateComment(@Valid @RequestBody @ApiParam(value = "수정할 댓글 정보", required = true) CommentDto commentDto) throws Exception {
         log.debug("update Comment : {}",commentDto);
         commentService.updateComment(commentDto);
         return new ResponseEntity<String>(HttpStatus.OK);
