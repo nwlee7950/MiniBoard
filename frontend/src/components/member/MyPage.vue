@@ -1,22 +1,59 @@
 <template>
 <div class="mypage">
     <div class="title">My Page</div>
-    <div class="container">
-        <span>이름</span>
-        <span></span>
-        <span>등급</span>
-        <span></span>
-        <span>아이디</span>
-        <span></span>
-        <span>이메일</span>
-        <span></span>
+    <div class="memberInfo" v-if="userInfo">
+        <h1>My Page<i class="fas fa-user-tag"></i></h1>
+        <div class="infoDetail">
+            <p>아이디</p>
+            <p>{{ userInfo.id }}</p>
+            <p>이름</p>
+            <p>{{ userInfo.name }}</p>
+        </div>
     </div>
+    <div class="btnBox">
+        <button class="modifyBtn btn" @click="moveUpdate">정보수정</button>
+        <button class="quitBtn btn" @click="deleteMember">회원탈퇴</button>
+    </div>
+
 </div>
 </template>
 
 <script>
-export default {
+import {
+    mapState,
+    mapMutations,
+    mapActions,
+} from "vuex";
 
+export default {
+    name: "MyPage",
+    computed: {
+        ...mapState("memberStore", ["userInfo", "isDeleted"]),
+    },
+    methods: {
+        ...mapActions("memberStore", ["userDelete"]),
+        ...mapMutations("memberStore", ["SET_IS_LOGIN", "SET_USER_INFO"]),
+        moveUpdate() {
+            this.$router.push({
+                name: "UpdateMember",
+                param: {
+                    id: this.userInfo.id,
+                }
+            })
+        },
+        async deleteMember() {
+            console.log(this.userInfo.id);
+            await this.userDelete(this.userInfo.id);
+            console.log(this.isDeleted);
+            this.SET_IS_LOGIN(false);
+            this.SET_USER_INFO(null);
+            sessionStorage.removeItem("access-token");
+            if (this.$route.path != "/")
+                this.$router.push({
+                    name: "Home",
+                });
+        }
+    }
 }
 </script>
 
@@ -34,6 +71,7 @@ export default {
     text-decoration: underline;
     text-align: center;
 }
+
 .container {
     background-color: var(--white-color);
     padding: 50px;
