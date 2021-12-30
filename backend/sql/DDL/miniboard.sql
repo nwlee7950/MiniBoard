@@ -22,9 +22,9 @@ USE `miniboard` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `miniboard`.`board` (
                                                    `id` BIGINT NOT NULL AUTO_INCREMENT,
-                                                   `user_id` VARCHAR(20) NULL DEFAULT NULL,
-                                                   `title` VARCHAR(45) NULL DEFAULT NULL,
-                                                   `content` VARCHAR(45) NULL DEFAULT NULL,
+                                                   `user_id` VARCHAR(20) NOT NULL,
+                                                   `title` VARCHAR(50) NOT NULL,
+                                                   `content` VARCHAR(50) NOT NULL,
                                                    `hits` BIGINT NULL DEFAULT '0',
                                                    `date` TIMESTAMP NULL DEFAULT NULL,
                                                    `is_notice` TINYINT NULL DEFAULT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `miniboard`.`user` (
                                                   `id` VARCHAR(20) NOT NULL,
                                                   `password` VARCHAR(100) NOT NULL,
                                                   `role` VARCHAR(15) NULL DEFAULT NULL,
-                                                  `name` VARCHAR(15) NULL DEFAULT NULL,
+                                                  `name` VARCHAR(15) NOT NULL,
                                                   `profile_image` VARCHAR(100) NULL DEFAULT NULL,
                                                   PRIMARY KEY (`id`),
                                                   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
