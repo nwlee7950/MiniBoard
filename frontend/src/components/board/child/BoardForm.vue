@@ -3,7 +3,7 @@
     <form @submit="onSubmit" @reset="onReset">
         <div class="form">
             <label for="userId">작성자</label>
-            <input type="text" name="userId" v-model="article.userId" ref="userId">
+            <input type="text" name="userId" v-model="userInfo.id" disabled>
             <label for="title">제목</label>
             <input type="text" name="title" v-model="article.title" ref="title">
             <label for="content">내용</label>
@@ -27,6 +27,7 @@ import {
 export default {
     computed:{
         ...mapState("boardStore", ["article"]),
+        ...mapState("memberStore", ["userInfo"]),
     },
     methods: {
         ...mapActions("boardStore", ["resetArticle", "getOneArticle", "addArticle", "modArticle"]),
@@ -35,12 +36,7 @@ export default {
 
             let err = true;
             let msg = "";
-            !this.article.userId &&
-                ((msg = "작성자 입력해주세요"),
-                    (err = false),
-                    this.$refs.userId.focus());
-            err &&
-                !this.article.title &&
+            !this.article.title &&
                 ((msg = "제목 입력해주세요"),
                     (err = false),
                     this.$refs.title.focus());
@@ -68,7 +64,7 @@ export default {
         //CREATE_ARTICLE
         registArticle() {
             let article = {
-                userId: this.article.userId,
+                userId: this.userInfo.id,
                 title: this.article.title,
                 content: this.article.content,
                 notice: this.article.notice,
@@ -78,7 +74,7 @@ export default {
         },
         updateArticle() {
             let article = {
-                userId: this.article.userId,
+                userId: this.userInfo.id,
                 title: this.article.title,
                 content: this.article.content,
                 notice: this.article.notice,
@@ -103,6 +99,7 @@ export default {
         if (this.type === "modify") {
             this.getOneArticle(this.$route.params.articleno);
         }
+        this.article.notice = false;
     },
 
 }

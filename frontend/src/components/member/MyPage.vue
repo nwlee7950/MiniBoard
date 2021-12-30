@@ -1,20 +1,20 @@
 <template>
 <div class="mypage">
     <div class="title">My Page</div>
-    <div class="memberInfo" v-if="userInfo">
-        <h1>My Page<i class="fas fa-user-tag"></i></h1>
-        <div class="infoDetail">
-            <p>아이디</p>
-            <p>{{ userInfo.id }}</p>
-            <p>이름</p>
-            <p>{{ userInfo.name }}</p>
+    <div class="container">
+        <div class="memberInfo" v-if="userInfo">
+            <div class="infoDetail">
+                    <p>아이디</p>
+                    <p>{{ userInfo.id }}</p>
+                    <p>이름</p>
+                    <p>{{ userInfo.name }}</p>
+            </div>
+        </div>
+        <div class="btnBox">
+            <button class="modifyBtn btn" @click="moveUpdate">정보수정</button>
+            <button class="quitBtn btn" @click="deleteMember">회원탈퇴</button>
         </div>
     </div>
-    <div class="btnBox">
-        <button class="modifyBtn btn" @click="moveUpdate">정보수정</button>
-        <button class="quitBtn btn" @click="deleteMember">회원탈퇴</button>
-    </div>
-
 </div>
 </template>
 
@@ -59,9 +59,8 @@ export default {
 
 <style scoped>
 .mypage {
+    height: 50vh;
     padding-top: 100px;
-    display: flex;
-    flex-direction: column;
 }
 
 .title {
@@ -73,10 +72,42 @@ export default {
 }
 
 .container {
-    background-color: var(--white-color);
-    padding: 50px;
-    border-radius: 5px;
-    box-shadow: 2px 2px 10px var(--shadow-color);
-    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(226, 224, 226);
+    border-radius: 10px;
+    padding: 40px 50px;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+}
+
+.infoDetail{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.infoDetail>p:nth-child(odd){
+    margin-right: 10px;
+}
+.infoDetail>p:nth-child(even){
+    margin-left: 10px;
+}
+
+.btn {
+    width: 100px;
+    border: none;
+    border-radius: 3px;
+    background-color: var(--main-color);
+    color: white;
+    margin-top: 15px;
+    padding: 3px 0;
+}
+.btn:first-child{
+    margin-right: 10px;
+}
+.btn:last-child{
+    margin-left: 10px;
 }
 </style>

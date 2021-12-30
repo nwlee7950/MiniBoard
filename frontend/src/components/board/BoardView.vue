@@ -5,11 +5,11 @@
         <form @submit="onSubmit">
             <div class="form">
                 <label for="author">작성자</label>
-                <input type="text" name="author" v-model="article.userId">
+                <input type="text" name="author" v-model="article.userId" disabled>
                 <label for="title">제목</label>
-                <input type="text" name="title" v-model="article.title">
+                <input type="text" name="title" v-model="article.title" disabled>
                 <label for="content">내용</label>
-                <textarea name="content" class="content_box" v-model="article.content"></textarea>
+                <textarea name="content" class="content_box" v-model="article.content" disabled></textarea>
             </div>
             <div class="btn_box">
                 <button @click="goModify" class="modify_btn">Modify</button>

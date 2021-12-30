@@ -4,9 +4,7 @@ const api = apiInstance();
 
 function setAuthToken() {
   let token = sessionStorage.getItem("access-token");
-  console.log(api.defaults.headers.Authorization);
   api.defaults.headers.Authorization = "Bearer " + token;
-  console.log(api.defaults.headers.Authorization);
   console.log("헤더 토큰 셋팅 성공");
 }
 

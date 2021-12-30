@@ -19,7 +19,7 @@ export default {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 100px;
+    margin-top: 200px;
     font-size: 30px;
 }
 .link{
