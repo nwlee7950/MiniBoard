@@ -5,7 +5,6 @@ import com.toyproject.miniboard.jwt.TokenProvider;
 import com.toyproject.miniboard.model.dto.UserDto;
 import com.toyproject.miniboard.model.dto.UserLoginDto;
 import com.toyproject.miniboard.model.dto.UserRegisterDto;
-import com.toyproject.miniboard.model.service.CustomUserDetailsService;
 import com.toyproject.miniboard.model.service.UserService;
 import com.toyproject.miniboard.model.vo.Token;
 import com.toyproject.miniboard.model.vo.User;

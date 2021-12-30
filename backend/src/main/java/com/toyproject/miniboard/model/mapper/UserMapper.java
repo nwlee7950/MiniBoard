@@ -2,8 +2,6 @@ package com.toyproject.miniboard.model.mapper;
 
 import com.toyproject.miniboard.model.vo.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Mapper
