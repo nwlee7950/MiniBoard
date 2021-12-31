@@ -4,10 +4,14 @@
     <div class="container">
         <div class="memberInfo" v-if="userInfo">
             <div class="infoDetail">
-                    <p>아이디</p>
-                    <p>{{ userInfo.id }}</p>
-                    <p>이름</p>
-                    <p>{{ userInfo.name }}</p>
+                <span></span>
+                <img :src="require(`@/assets/profileImg/${userInfo.profileImage}`)" alt="" class="profileImg">
+                <div class="idName">
+                <p>아이디</p>
+                <p>{{ userInfo.id }}</p>
+                <p>이름</p>
+                <p>{{ userInfo.name }}</p>
+                </div>
             </div>
         </div>
         <div class="btnBox">
@@ -27,6 +31,9 @@ import {
 
 export default {
     name: "MyPage",
+    data() {
+        return {}
+    },
     computed: {
         ...mapState("memberStore", ["userInfo", "isDeleted"]),
     },
@@ -54,7 +61,7 @@ export default {
                 });
         }
     },
-    created(){
+    created() {
         this.getUserInfo(sessionStorage.getItem("access-token"));
     }
 }
@@ -83,18 +90,24 @@ export default {
     font-size: 20px;
     justify-content: center;
     align-items: center;
-    width: 500px;
+    width: 600px;
 }
 
-.infoDetail{
+.infoDetail {
+    display: flex;
+    flex-direction: column;
+    }
+.idName{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+
+}
+.idName>p:nth-child(odd) {
+    margin-right: 10px;
+    text-align: right;
 }
 
-.infoDetail>p:nth-child(odd){
-    margin-right: 10px;
-}
-.infoDetail>p:nth-child(even){
+.idName>p:nth-child(even) {
     margin-left: 10px;
 }
 
@@ -107,10 +120,20 @@ export default {
     margin-top: 15px;
     padding: 3px 0;
 }
-.btn:first-child{
+
+.btn:first-child {
     margin-right: 10px;
 }
-.btn:last-child{
+
+.btn:last-child {
     margin-left: 10px;
+}
+.profileImg{
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    margin: 30px 0;
+    margin-bottom: 50px;
+    padding: 0;
 }
 </style>

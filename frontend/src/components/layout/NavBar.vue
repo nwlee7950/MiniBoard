@@ -1,14 +1,17 @@
 <template>
 <div class="navbar">
-    <router-link :to="{name:'Home'}" class="logo link"><i class="fas fa-stream"></i> Mini Board</router-link>
+    <router-link :to="{name:'Home'}" class="logo link"><i class="fas fa-stream"></i>Mini Board</router-link>
     <div class="menus">
-        <router-link :to="{name:'Board'}" class="board link"><i class="far fa-keyboard"></i> Board</router-link>
+        <router-link :to="{name:'Board'}" class="board link"><i class="far fa-keyboard"></i>Board</router-link>
         <div class="admin" v-if="isAdmin">
             <router-link :to="{name:'AdminPage'}" class=" admin link"><i class="far fa-address-book"></i>회원관리</router-link>
         </div>
         <div class="in" v-if="isLogin">
             <p class="welcome">{{userInfo.name}}님 환영합니다 :)</p>
-            <router-link :to="{name:'MyPage'}" class="mypage link"><i class="far fa-user-circle"></i> My Page</router-link>
+            <router-link :to="{name:'MyPage'}" class="mypage link">
+                <img :src="require(`@/assets/profileImg/${userInfo.profileImage}`)" alt="" class="profileImg">
+                My Page
+            </router-link>
             <button @click.prevent="logoutUser" class="logoutBtn"><i class="fas fa-sign-out-alt"></i>Logout</button>
         </div>
         <div class="out" v-else>
@@ -97,5 +100,10 @@ export default {
 .fas,
 .far{
     margin-right: 10px;
+}
+.profileImg{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
 }
 </style>
