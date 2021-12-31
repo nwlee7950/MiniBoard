@@ -4,10 +4,10 @@ const api = apiInstance();
 
 function setAuthToken() {
   let token = sessionStorage.getItem("access-token");
-  console.log(api.defaults.headers.Authorization);
+//   console.log(api.defaults.headers.Authorization);
   api.defaults.headers.Authorization = "Bearer " + token;
-  console.log(api.defaults.headers.Authorization);
-  console.log("헤더 토큰 셋팅 성공");
+//   console.log(api.defaults.headers.Authorization);
+//   console.log("헤더 토큰 셋팅 성공");
 }
 
 function getUsers(success, fail) {
@@ -24,9 +24,9 @@ function registUser(data, success, fail) {
   api.post(`/users`, data).then(success).catch(fail);
 }
 
-function modifyUser(user, success, fail) {
+function modifyUser(data, success, fail) {
   setAuthToken();
-  api.put(`/users`, JSON.stringify(user)).then(success).catch(fail);
+  api.put(`/users`, data).then(success).catch(fail);
 }
 
 function deleteUser(userid, success, fail) {

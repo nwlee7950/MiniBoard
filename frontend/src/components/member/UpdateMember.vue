@@ -35,12 +35,13 @@ export default {
                 password: null,
                 profileImage: "",
             },
-            file:null,
+            file: null,
         }
     },
     mounted() {
         console.log(this.$route);
         this.user.id = this.userInfo.id;
+        this.user.profileImage = this.userInfo.profileImage;
     },
     computed: {
         ...mapState("memberStore", ["isUpdate", "userInfo"])
@@ -48,7 +49,11 @@ export default {
     methods: {
         ...mapActions("memberStore", ["userUpdate", "getUserInfo"]),
         async updateMember() {
-            await this.userUpdate(this.user);
+            let data = {
+                "user": this.user,
+                "file": this.file,
+            }
+            await this.userUpdate(data);
             console.log(this.isUpdate);
             if (this.isUpdate) {
                 let token = sessionStorage.getItem("access-token");
@@ -60,11 +65,11 @@ export default {
             }
         },
         previewFiles(event) {
-            let file = event.target.files[0].name;
+            let file = event.target.files[0];
             this.file = file;
         }
     },
-    created(){
+    created() {
         this.user.profileImage = this.userInfo.profileImage;
     }
 };
@@ -78,10 +83,12 @@ export default {
     align-items: center;
     padding-top: 200px;
 }
-h1{
+
+h1 {
     font-size: 50px;
     margin-bottom: 50px;
 }
+
 form {
     display: flex;
     flex-direction: column;
@@ -93,7 +100,8 @@ form {
     align-items: center;
     margin: 0 200px;
 }
-.inputBox{
+
+.inputBox {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -109,7 +117,8 @@ input {
     padding: 5px;
     border-radius: 3px;
 }
-.updateBtn{
+
+.updateBtn {
     width: 100px;
     border: none;
     border-radius: 3px;

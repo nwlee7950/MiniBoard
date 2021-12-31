@@ -71,7 +71,10 @@ const memberStore = {
     },
     async userRegister({ commit }, data) {
       let formData = new FormData();
-      formData.append("userRegisterDto", new Blob([JSON.stringify(data.user)], { type: "application/json" }));
+      formData.append(
+        "userRegisterDto",
+        new Blob([JSON.stringify(data.user)], { type: "application/json" })
+      );
       formData.append("file", data.file);
       await registUser(
         formData,
@@ -113,9 +116,15 @@ const memberStore = {
         () => {}
       );
     },
-    async userUpdate({ commit }, user) {
+    async userUpdate({ commit }, data) {
+      let formData = new FormData();
+      formData.append(
+        "userDto",
+        new Blob([JSON.stringify(data.user)], { type: "application/json" })
+      );
+      formData.append("file", data.file);
       await modifyUser(
-        user,
+        formData,
         (res) => {
           commit("SET_IS_UPDATE", true);
           console.log(res);
