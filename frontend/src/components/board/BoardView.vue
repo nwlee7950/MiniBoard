@@ -12,7 +12,7 @@
                 <textarea name="content" class="content_box" v-model="article.content" disabled></textarea>
             </div>
             <div class="btn_box">
-                <button @click="goModify" class="modify_btn">Modify</button>
+                <button @click="goModify" class="modify_btn">Update</button>
                 <button type="submit" class="modify_btn">Delete</button>
                 <button @click="goList">Back</button>
             </div>
@@ -94,12 +94,16 @@ export default {
             this.newComment = "";
         },
         goModify() {
-            this.$router.push({
-                name: 'BoardModify',
-                params: {
-                    articleno: this.article.id,
-                }
-            });
+            if(this.article.userId === this.userInfo.id){
+                this.$router.push({
+                    name: 'BoardModify',
+                    params: {
+                        articleno: this.article.id,
+                    }
+                });
+            }else{
+                console.log("글 수정 권한이 없습니다.");
+            }
         },
         goList() {
             this.$router.push({

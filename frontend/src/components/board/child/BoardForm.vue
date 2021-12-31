@@ -71,7 +71,7 @@ export default {
         //CREATE_ARTICLE
         registArticle() {
             let notice = false;
-            if(this.userInfo.role === "ADMIN"){
+            if (this.userInfo.role === "ADMIN") {
                 notice = true;
             }
             let article = {
@@ -85,7 +85,7 @@ export default {
         },
         updateArticle() {
             let notice = false;
-            if(this.userInfo.role === "ADMIN"){
+            if (this.userInfo.role === "ADMIN") {
                 notice = true;
             }
             let article = {
@@ -95,11 +95,7 @@ export default {
                 notice: notice,
                 id: this.article.id,
             };
-            if (this.userInfo.id === this.article.userId){
-                this.modArticle(article);
-            } else {
-                console.log("수정이 불가합니다.");
-            }
+            this.modArticle(article);
             this.moveList();
         },
         moveList() {
