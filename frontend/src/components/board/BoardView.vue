@@ -54,7 +54,7 @@ export default {
             currentPage: 1,
             perPage: 5,
             newComment: "",
-            curUser: "jisu",
+            curUser: "",
         };
     },
     components: {
@@ -133,6 +133,7 @@ export default {
     created() {
         this.getOneArticle(this.$route.params.articleno);
         this.getComment();
+        this.curUser = this.userInfo.id
     },
 
 }

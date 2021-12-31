@@ -2,15 +2,23 @@
 <div class="admin">
     <div class="container">
         <h1 class="title">관리자 페이지입니다.</h1>
-        <div class="user" v-for="(user, index) in userList" :key="index">
-            <span class="center"> No. {{index}}</span>
-            <span>아이디 : {{user.id}}</span>
-            <span>이름 : {{user.name}}</span>
-            <div class="checkBox center">
-            <input :value="user.id" type="checkbox" v-model="checked" class="center">
+        <div class="users" id="my-table" :per-page="perPage" :current-page="currentPage">
+            <div class="user" v-for="(user, index) in itemsForList" :key="index">
+                <span class="center"> No. {{index + 1}}</span>
+                <span>아이디 : {{user.id}}</span>
+                <span>이름 : {{user.name}}</span>
+                <div class="checkBox center">
+                    <input :value="user.id" type="checkbox" v-model="checked" class="center">
+                </div>
             </div>
         </div>
-        <button @click.prevent="deleteMember" class="btn">탈퇴</button>
+        <div class="bottom">
+            <b-pagination class="page" v-model="currentPage" :total-rows="rows" :per-page="perPage" aria-controls="my-table" align="center">
+            </b-pagination>
+            <div class="btnBox">
+                <button @click.prevent="deleteMember" class="btn">탈퇴</button>
+            </div>
+        </div>
     </div>
 </div>
 </template>
@@ -25,10 +33,21 @@ export default {
     data() {
         return {
             checked: [],
+            currentPage: 1,
+            perPage: 10,
         }
     },
     computed: {
         ...mapState("memberStore", ["userList"]),
+        rows() {
+            return this.userList.length;
+        },
+        itemsForList() {
+            return this.userList.slice(
+                (this.currentPage - 1) * this.perPage,
+                this.currentPage * this.perPage,
+            );
+        },
     },
     methods: {
         ...mapActions("memberStore", ["getUserList", "userDelete"]),
@@ -47,7 +66,6 @@ export default {
 
 <style scoped>
 .admin {
-    height: 75vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,6 +73,7 @@ export default {
 }
 
 .title {
+    padding-top: 200px;
     margin-bottom: 50px;
     font-size: 50px;
 }
@@ -81,11 +100,22 @@ export default {
     border-radius: 3px;
     background-color: var(--main-color);
     color: white;
-    margin-top: 30px;
     padding: 3px 0;
-    align-self: flex-end;
+    height: 30px;
 }
-.center{
+
+.center {
     text-align: center;
+}
+
+.bottom {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page {
+    margin-top: 10px;
 }
 </style>
