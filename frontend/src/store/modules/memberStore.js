@@ -1,6 +1,6 @@
 import jwt_decode from "jwt-decode";
 import {
-    getUsers,
+  getUsers,
   getUser,
   registUser,
   modifyUser,
@@ -16,8 +16,8 @@ const memberStore = {
     userInfo: null,
     isUpdate: false,
     isDeleted: false,
-    isAdmin:false,
-    userList:null,
+    isAdmin: false,
+    userList: null,
   },
   getters: {
     checkUserInfo: function (state) {
@@ -26,20 +26,20 @@ const memberStore = {
   },
   mutations: {
     SET_IS_LOGIN: (state, isLogin) => {
-        console.log("three");
+      console.log("three");
       state.isLogin = isLogin;
     },
     SET_IS_REGISTER: (state, isRegister) => {
       state.isRegister = isRegister;
     },
     SET_USER_INFO: (state, userInfo) => {
-        console.log("four");
+      console.log("four");
       state.userInfo = userInfo;
       console.log(userInfo);
-        if(userInfo === null){
-            state.isAdmin = false;
-        } else if(userInfo.role === 'ADMIN'){
-          state.isAdmin = true;
+      if (userInfo === null) {
+        state.isAdmin = false;
+      } else if (userInfo.role === "ADMIN") {
+        state.isAdmin = true;
       }
     },
     SET_IS_DELETED: (state, isDeleted) => {
@@ -49,8 +49,8 @@ const memberStore = {
       state.isUpdate = isUpdate;
     },
     SET_USER_LIST: (state, userList) => {
-        state.userList = userList;
-    }
+      state.userList = userList;
+    },
   },
   actions: {
     async userConfirm({ commit, dispatch }, user) {
@@ -69,11 +69,10 @@ const memberStore = {
         }
       );
     },
-    async userRegister({ commit }, user, file) {
+    async userRegister({ commit }, data) {
       let formData = new FormData();
-      formData.append("userRegisterDto", JSON.stringify(user));
-      formData.append("file", file);
-      console.log(formData);
+      formData.append("userRegisterDto", new Blob([JSON.stringify(data.user)], { type: "application/json" }));
+      formData.append("file", data.file);
       await registUser(
         formData,
         (res) => {
@@ -124,22 +123,22 @@ const memberStore = {
         () => {}
       );
     },
-    async getUserList({commit}){
-        await getUsers(
-            (res) => {
-                commit("SET_USER_LIST", res.data);
-            },
-            () => {}
-        )
+    async getUserList({ commit }) {
+      await getUsers(
+        (res) => {
+          commit("SET_USER_LIST", res.data);
+        },
+        () => {}
+      );
     },
-    logout({commit}, data){
-        console.log("two");
-        commit("SET_IS_LOGIN", data.isLogin);
-        console.log(data);
-        commit("SET_USER_INFO", data.userInfo);
-        sessionStorage.removeItem("access-token");
-        console.log("five");
-    }
+    logout({ commit }, data) {
+      console.log("two");
+      commit("SET_IS_LOGIN", data.isLogin);
+      console.log(data);
+      commit("SET_USER_INFO", data.userInfo);
+      sessionStorage.removeItem("access-token");
+      console.log("five");
+    },
   },
 };
 

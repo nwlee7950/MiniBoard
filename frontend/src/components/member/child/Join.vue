@@ -8,7 +8,7 @@
         <label for="name">Name</label>
         <input type="text" name="name" placeholder="이름 입력..." v-model="user.name">
         <input type="file" @change="previewFiles">
-        <button @click="registUser" class="joinBtn">회원가입</button>
+        <button @click.prevent="registUser" class="joinBtn">회원가입</button>
     </form>
 </div>
 </template>
@@ -37,7 +37,11 @@ export default {
     methods: {
         ...mapActions("memberStore", ["userRegister"]),
         async registUser() {
-            await this.userRegister(this.user, this.file);
+            let data = {
+                "user": this.user,
+                "file": this.file
+            }
+            await this.userRegister(data);
             this.$router.push({
                 name: "Login"
             })
@@ -78,7 +82,8 @@ input {
     padding: 5px;
     border-radius: 3px;
 }
-.joinBtn{
+
+.joinBtn {
     width: 100px;
     border: none;
     border-radius: 3px;
