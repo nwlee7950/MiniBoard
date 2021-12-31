@@ -34,9 +34,13 @@ public class UserServiceImpl implements  UserService {
         String separ = File.separator;
 
         File file = new File("");
-        String rootPath = file.getAbsolutePath().split("src")[0];
+//        String rootPath = file.getAbsolutePath().split("src")[0];
+//        String savePath = rootPath + separ + "src" + separ + "main" + separ + "resources" + separ + "profileImg";
+//        System.out.println(savePath);
 
-        String savePath = rootPath + separ + "src" + separ + "main" + separ + "resources" + separ + "profileImg";
+        String[] rootPath = file.getAbsolutePath().split("backend");
+        String savePath = rootPath[0] + "frontend\\src\\assets\\profileImg";
+
         if(!new File(savePath).exists()){
             try{
                 new File(savePath).mkdirs();
