@@ -19,16 +19,20 @@ const boardStore = {
       console.log(msg);
     },
     SET_ADMIN_ARTICLES(state, articles) {
-        let adminArticles = articles.filter(article => article.userId === "admin");
-        console.log(adminArticles);
-        state.articles = adminArticles;
+      let adminArticles = articles.filter(
+        (article) => article.userId === "admin"
+      );
+      console.log(adminArticles);
+      state.articles = adminArticles;
     },
     SET_USER_ARTICLES(state, articles) {
-        let userArticles = articles.filter(article => article.userId !== "admin");
-        console.log(userArticles);
-        for(let i = 0; i < userArticles.length; i++){
-            state.articles.push(userArticles[i]);
-        }
+      let userArticles = articles.filter(
+        (article) => article.userId !== "admin"
+      );
+      console.log(userArticles);
+      for (let i = 0; i < userArticles.length; i++) {
+        state.articles.push(userArticles[i]);
+      }
     },
     SET_CURRENT_ARTICLE(state, article) {
       state.article = article;
@@ -57,12 +61,13 @@ const boardStore = {
       getArticle(
         boardId,
         (res) => {
-          let msg = "해당 글 불러오기 성공!!";
+          let msg = "해당 글을 불러오는 데 성공했습니다.";
           console.log(msg);
           commit("SET_CURRENT_ARTICLE", res.data);
         },
         (error) => {
           console.log("에러발생!!", error);
+          alert("글을 불러오는 데 실패했습니다.");
         }
       );
     },
@@ -71,12 +76,13 @@ const boardStore = {
         article,
         (res) => {
           let msg = "글 등록이 완료되었습니다.";
-          console.log(msg);
+          alert(msg);
           console.log(res);
           commit("SET_MSG", msg);
         },
         (error) => {
           console.log(error);
+          alert("글 등록에 실패했습니다.");
         }
       );
     },
@@ -85,12 +91,13 @@ const boardStore = {
         article,
         (res) => {
           let msg = "글 수정이 완료되었습니다.";
-          console.log(msg);
+          alert(msg);
           console.log(res);
           commit("SET_MSG", msg);
         },
         (error) => {
           console.log(error);
+          alert("글 수정에 실패했습니다.");
         }
       );
     },
@@ -99,12 +106,13 @@ const boardStore = {
         boardId,
         (res) => {
           let msg = "글 삭제가 완료되었습니다.";
-          console.log(msg);
+          alert(msg);
           console.log(res);
           commit("SET_MSG", msg);
         },
         (error) => {
           console.log(error);
+          alert("글 삭제에 실패했습니다.");
         }
       );
     },

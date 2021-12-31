@@ -19,7 +19,7 @@
                     <input slot="body" type="text" v-model="rewrite" placeholder="new reply.." class="modal_body" />
                     <button slot="footer" type="submit" class="modal_footer">Update</button>
                 </Modal>
-            </form> 
+            </form>
         </div>
         <div class="option">
             <form @submit="onDelete">
@@ -53,17 +53,17 @@ export default {
             rewrite: "",
         }
     },
-    computed:{
+    computed: {
         ...mapState("memberStore", ["userInfo"]),
     },
     methods: {
         ...mapActions("replyStore", ["modReply", "delReply"]),
 
         //UPDATE REPLY
-        updateOrNot(){
-            if(this.userId === this.userInfo.id){
+        updateOrNot() {
+            if (this.userId === this.userInfo.id) {
                 this.showModal = true;
-            }else{
+            } else {
                 console.log("대댓글 수정 권한이 없습니다.");
             }
         },
@@ -87,9 +87,9 @@ export default {
         //DELETE REPLY
         onDelete(event) {
             event.preventDefault();
-            if(this.userId === this.userInfo.id){
-            this.removeReply();
-            }else{
+            if (this.userId === this.userInfo.id) {
+                this.removeReply();
+            } else {
                 console.log("대댓글 삭제 권한이 없습니다.");
             }
         },
@@ -121,14 +121,17 @@ export default {
     display: flex;
     justify-content: space-between;
 }
-.reply_contents{
+
+.reply_contents {
     display: flex;
     flex-direction: column;
 }
-.options{
+
+.options {
     display: flex;
     align-items: center;
 }
+
 .author_info {
     display: flex;
     font-size: 13px;
@@ -166,7 +169,8 @@ export default {
     color: var(--white-color);
     padding: 5px 15px;
 }
-.btn:hover{
+
+.btn:hover {
     color: var(--main-color);
 }
 </style>

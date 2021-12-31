@@ -6,7 +6,7 @@
             Share yours and take other's
         </p>
         <div class="joinLink">
-        <router-link :to="{name:'Join'}" class="move_join" v-if="logout">Join Mini Board</router-link>
+            <router-link :to="{name:'Join'}" class="move_join" v-if="logout">Join Mini Board</router-link>
         </div>
         <button type="button" class="move_board" @click="move_board">Go to the Board</button>
     </div>
@@ -25,23 +25,27 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import {
+    mapState
+} from 'vuex'
 export default {
     name: 'Home',
-    data(){
-        return{
-            "logout":true,
+    data() {
+        return {
+            "logout": true,
         }
     },
-    computed:{
+    computed: {
         ...mapState("memberStore", ["isLogin"]),
     },
-    methods:{
-        move_board(){
-            this.$router.push({name:'Main'});
+    methods: {
+        move_board() {
+            this.$router.push({
+                name: 'Main'
+            });
         }
     },
-    created(){
+    created() {
         this.logout = !this.isLogin;
     }
 }
@@ -67,20 +71,24 @@ export default {
     font-size: 40px;
     margin-bottom: 150px;
 }
-.bold{
+
+.bold {
     font-size: 65px;
     color: var(--main-color);
 }
-.move_join{
+
+.move_join {
     font-size: 15px;
     margin: 100px 0 30px 0;
     text-decoration: underline;
     color: var(--font-color);
 }
-.move_join:hover{
-    color:var(--main-color);
+
+.move_join:hover {
+    color: var(--main-color);
 }
-.move_board{
+
+.move_board {
     font-size: 30px;
     color: var(--white-color);
     background-color: var(--main-color);
@@ -88,11 +96,13 @@ export default {
     border-radius: 5px;
     padding: 10px 15px;
 }
-.move_board:hover{
+
+.move_board:hover {
     transform: scale(1.1);
     transition: transform 0.2s ease;
     cursor: pointer;
 }
+
 .icons {
     width: 600px;
     height: 600px;
@@ -107,7 +117,7 @@ img {
     height: 100%;
 }
 
-.joinLink{
+.joinLink {
     margin-bottom: 20px;
     font-size: 30px;
 }

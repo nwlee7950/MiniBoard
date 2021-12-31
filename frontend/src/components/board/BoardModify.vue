@@ -1,14 +1,14 @@
 <template>
-  <div id="modify" class="modify">
-      <div class="title">modify</div>
-      <board-form type="modify"></board-form>
-  </div>
+<div id="modify" class="modify">
+    <div class="title">modify</div>
+    <board-form type="modify"></board-form>
+</div>
 </template>
 
 <script>
 import BoardForm from './child/BoardForm.vue';
 export default {
-    components:{
+    components: {
         BoardForm,
     }
 }

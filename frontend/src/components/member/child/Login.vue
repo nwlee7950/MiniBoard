@@ -31,7 +31,9 @@ export default {
         ...mapActions("memberStore", ["userConfirm", "getUserInfo"]),
         async confirm() {
             await this.userConfirm(this.user);
-            this.$router.push({name:"Board"});
+            this.$router.push({
+                name: "Board"
+            });
         },
     }
 }
@@ -64,7 +66,8 @@ input {
     padding: 5px;
     border-radius: 3px;
 }
-.loginBtn{
+
+.loginBtn {
     width: 100px;
     border: none;
     border-radius: 3px;

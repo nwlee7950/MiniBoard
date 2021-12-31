@@ -36,12 +36,14 @@ export default {
         async logoutUser() {
             console.log("one");
             let data = {
-                "isLogin" : false,
-                "userInfo" : null
+                "isLogin": false,
+                "userInfo": null
             }
             await this.logout(data);
             console.log("six");
-            this.$router.push({name:"Home"});
+            this.$router.push({
+                name: "Home"
+            });
             console.log("seven");
         },
     }
@@ -81,27 +83,33 @@ export default {
 .dropdown {
     position: relative;
 }
-.in{
+
+.in {
     display: flex;
     align-items: center;
 }
-.welcome{
+
+.welcome {
     padding-right: 20px;
     padding-top: 12px;
 }
-.logoutBtn{
+
+.logoutBtn {
     border: none;
     outline: none;
     background-color: white;
 }
-.logoutBtn:hover{
+
+.logoutBtn:hover {
     color: var(--main-color);
 }
+
 .fas,
-.far{
+.far {
     margin-right: 10px;
 }
-.profileImg{
+
+.profileImg {
     width: 30px;
     height: 30px;
     border-radius: 50%;

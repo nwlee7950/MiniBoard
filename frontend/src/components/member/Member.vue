@@ -1,7 +1,7 @@
 <template>
-  <div class="member">
-      <router-view></router-view>
-  </div>
+<div class="member">
+    <router-view></router-view>
+</div>
 </template>
 
 <script>

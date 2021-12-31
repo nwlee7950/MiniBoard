@@ -20,7 +20,6 @@ const store = new Vuex.Store({
       storage: sessionStorage,
     }),
   ],
-
 });
 
 export default store;

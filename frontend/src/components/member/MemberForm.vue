@@ -15,14 +15,15 @@ export default {
 </script>
 
 <style scoped>
-.form{
+.form {
     width: 100%;
     display: flex;
     justify-content: center;
     margin-top: 200px;
     font-size: 30px;
 }
-.link{
+
+.link {
     color: var(--font-color);
     text-decoration: underline;
     margin: 0 50px;

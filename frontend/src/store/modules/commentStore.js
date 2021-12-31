@@ -36,7 +36,7 @@ const commentStore = {
         comment,
         () => {
           let msg = "댓글 등록이 완료되었습니다.";
-          console.log(msg);
+          alert(msg);
           getComment(
             comment.boardId,
             (response) => {
@@ -52,16 +52,17 @@ const commentStore = {
         },
         (error) => {
           console.log("댓글 추가 에러!!", error);
+          alert("댓글 등록에 실패했습니다.")
         }
       );
     },
     modComment: ({ commit }, comment) => {
-        console.log(comment);
+      console.log(comment);
       modifyComment(
         comment,
         (res) => {
           let msg = "댓글 수정이 완료되었습니다.";
-          console.log(msg);
+          alert(msg);
           console.log(res);
           getComment(
             comment.boardId,
@@ -78,6 +79,7 @@ const commentStore = {
         },
         (error) => {
           console.log("댓글 수정 에러!!", error);
+          alert("댓글 수정에 실패했습니다.");
         }
       );
     },
@@ -86,7 +88,7 @@ const commentStore = {
         comment.id,
         (res) => {
           let msg = "삭제가 완료되었습니다.";
-          console.log(msg);
+          alert(msg);
           console.log(res);
           getComment(
             comment.boardId,
@@ -103,6 +105,7 @@ const commentStore = {
         },
         (error) => {
           console.log("댓글 삭제 에러!!", error);
+          alert("댓글 삭제에 실패했습니다.");
         }
       );
     },

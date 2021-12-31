@@ -211,7 +211,8 @@ table {
     border: 1px solid var(--font-color);
     padding: 0 10px;
 }
-.pagination{
+
+.pagination {
     position: absolute;
     bottom: 0;
     left: 43%;

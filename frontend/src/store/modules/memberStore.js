@@ -60,11 +60,11 @@ const memberStore = {
           let token = res.data.token;
           commit("SET_IS_LOGIN", true);
           sessionStorage.setItem("access-token", token);
-          console.log("로그인 스토어 성공");
+          alert("환영합니다.");
           dispatch("getUserInfo", token);
         },
         () => {
-          console.log("로그인 스토어 실패");
+          alert("등록되지 않은 정보입니다. 다시 입력해주세요.");
           commit("SET_IS_LOGIN", false);
         }
       );
@@ -81,6 +81,7 @@ const memberStore = {
         (res) => {
           console.log(res);
           commit("SET_IS_REGISTER", true);
+          alert("가입을 환영합니다.");
         },
         (error) => {
           console.log(error);
@@ -112,6 +113,7 @@ const memberStore = {
           console.log("memberstore");
           commit("SET_IS_DELETED", true);
           console.log(res);
+          alert("탈퇴 완료되었습니다. 다시 만나길 기다릴게요 :)");
         },
         () => {}
       );
@@ -128,6 +130,7 @@ const memberStore = {
         (res) => {
           commit("SET_IS_UPDATE", true);
           console.log(res);
+          alert("회원정보 수정이 완료되었습니다.");
         },
         () => {}
       );

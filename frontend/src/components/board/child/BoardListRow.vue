@@ -54,7 +54,8 @@ export default {
     opacity: 0.7;
     cursor: pointer;
 }
-.yes{
+
+.yes {
     background-color: rgb(227, 241, 227);
 }
 </style>
