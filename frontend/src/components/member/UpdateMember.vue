@@ -4,7 +4,7 @@
     <form class="modifyForm">
         <div class="inputBox">
             <label for="userid">아이디</label>
-            <input type="text" id="userid" v-model="user.id" required placeholder="아이디 입력...." disabled ref="userid" />
+            <input type="text" id="userid" v-model="userInfo.id" required placeholder="아이디 입력...." disabled ref="userid" />
             <label for="userpwd">비밀번호</label>
             <input type="password" id="userpwd" v-model="user.password" required placeholder="비밀번호 입력...." />
             <label for="userpwd">이름</label>
@@ -38,11 +38,6 @@ export default {
             file: null,
         }
     },
-    mounted() {
-        console.log(this.$route);
-        this.user.id = this.userInfo.id;
-        this.user.profileImage = this.userInfo.profileImage;
-    },
     computed: {
         ...mapState("memberStore", ["isUpdate", "userInfo"])
     },
@@ -54,10 +49,8 @@ export default {
                 "file": this.file,
             }
             await this.userUpdate(data);
-            console.log(this.isUpdate);
             if (this.isUpdate) {
                 let token = sessionStorage.getItem("access-token");
-                console.log(token);
                 await this.getUserInfo(token);
                 this.$router.push({
                     name: "MyPage",
@@ -70,6 +63,7 @@ export default {
         }
     },
     created() {
+        this.user.id = this.userInfo.id;
         this.user.profileImage = this.userInfo.profileImage;
     }
 };

@@ -31,7 +31,7 @@ export default {
         ...mapState("memberStore", ["userInfo", "isDeleted"]),
     },
     methods: {
-        ...mapActions("memberStore", ["userDelete"]),
+        ...mapActions("memberStore", ["userDelete", "getUserInfo"]),
         ...mapMutations("memberStore", ["SET_IS_LOGIN", "SET_USER_INFO"]),
         moveUpdate() {
             this.$router.push({
@@ -53,6 +53,9 @@ export default {
                     name: "Home",
                 });
         }
+    },
+    created(){
+        this.getUserInfo(sessionStorage.getItem("access-token"));
     }
 }
 </script>
