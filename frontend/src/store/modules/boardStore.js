@@ -18,8 +18,17 @@ const boardStore = {
       state.msg = msg;
       console.log(msg);
     },
-    SET_ALL_ARTICLES(state, articles) {
-      state.articles = articles;
+    SET_ADMIN_ARTICLES(state, articles) {
+        let adminArticles = articles.filter(article => article.userId === "admin");
+        console.log(adminArticles);
+        state.articles = adminArticles;
+    },
+    SET_USER_ARTICLES(state, articles) {
+        let userArticles = articles.filter(article => article.userId !== "admin");
+        console.log(userArticles);
+        for(let i = 0; i < userArticles.length; i++){
+            state.articles.push(userArticles[i]);
+        }
     },
     SET_CURRENT_ARTICLE(state, article) {
       state.article = article;
@@ -36,7 +45,8 @@ const boardStore = {
       listArticle(
         options,
         (res) => {
-          commit("SET_ALL_ARTICLES", res.data);
+          commit("SET_ADMIN_ARTICLES", res.data);
+          commit("SET_USER_ARTICLES", res.data);
         },
         (error) => {
           console.log(error);
