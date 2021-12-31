@@ -56,11 +56,13 @@ const commentStore = {
       );
     },
     modComment: ({ commit }, comment) => {
+        console.log(comment);
       modifyComment(
         comment,
-        () => {
+        (res) => {
           let msg = "댓글 수정이 완료되었습니다.";
           console.log(msg);
+          console.log(res);
           getComment(
             comment.boardId,
             (response) => {
@@ -82,9 +84,10 @@ const commentStore = {
     delComment: ({ commit }, comment) => {
       deleteComment(
         comment.id,
-        () => {
+        (res) => {
           let msg = "삭제가 완료되었습니다.";
           console.log(msg);
+          console.log(res);
           getComment(
             comment.boardId,
             (response) => {

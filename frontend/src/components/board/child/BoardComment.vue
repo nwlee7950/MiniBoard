@@ -40,6 +40,7 @@
 import Modal from "./ModalComment.vue";
 import ReplyRow from "./BoardReplyRow.vue";
 import {
+    mapState,
     mapActions
 } from "vuex";
 import {
@@ -54,6 +55,9 @@ export default {
             newReply: "",
             replys: [],
         }
+    },
+    computed: {
+        ...mapState("memberStore", ["userInfo"]),
     },
     components: {
         Modal,
@@ -73,8 +77,12 @@ export default {
         //UPDATE COMMENT
         onUpdate(event) {
             event.preventDefault();
-            //현재 접속 중인 유저가 댓글 작성자라면
-            this.updateComment();
+            if (this.userId === this.userInfo.id) {
+                this.updateComment();
+            } else {
+                console.log("수정 권한이 없습니다.");
+            }
+            this.toggleReply();
         },
         updateComment() {
             let comment = {
@@ -90,8 +98,11 @@ export default {
         //DELETE COMMENT
         onDelete(event) {
             event.preventDefault();
-            //현재 접속 중인 유저가 댓글 작성자라면
-            this.removeComment();
+            if (this.userId === this.userInfo.id) {
+                this.removeComment();
+            } else {
+                console.log("삭제 권한이 없습니다.");
+            }
         },
         removeComment() {
             let comment = {
@@ -219,9 +230,11 @@ button {
     color: var(--white-color);
     padding: 5px 15px;
 }
-.new_reply{
+
+.new_reply {
     display: flex;
 }
+
 .reply_input {
     width: 90%;
     padding: 10px;
@@ -230,16 +243,19 @@ button {
     margin-right: 15px;
 }
 
-.reply_input:focus{
+.reply_input:focus {
     outline: none;
 }
-.reply_box{
+
+.reply_box {
     margin-top: 20px;
 }
-.one-reply{
+
+.one-reply {
     border-bottom: 1px solid var(--shadow-color);
 }
-.one-reply:last-child{
-    border:none;
+
+.one-reply:last-child {
+    border: none;
 }
 </style>

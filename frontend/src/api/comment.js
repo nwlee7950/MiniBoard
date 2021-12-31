@@ -29,4 +29,5 @@ function modifyComment(comment, success, fail) {
   setAuthToken();
   api.put(`/comments`, JSON.stringify(comment)).then(success).catch(fail);
 }
+
 export { getComment, deleteComment, writeComment, modifyComment };
