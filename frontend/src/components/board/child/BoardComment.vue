@@ -9,7 +9,7 @@
     </div>
     <div class="options">
         <button @click="toggleReply"><i class="fas fa-reply reply"></i></button>
-        <button @click="showModal = true"><i class="fas fa-pen mm"></i></button>
+        <button @click.prevent="updateOrNot"><i class="fas fa-pen mm"></i></button>
         <form @submit="onUpdate">
             <Modal v-if="showModal" @close="showModal = false">
                 <h3 slot="header" class="modal_header">
@@ -75,13 +75,16 @@ export default {
         ...mapActions("replyStore", ["addReply"]),
 
         //UPDATE COMMENT
-        onUpdate(event) {
-            event.preventDefault();
+        updateOrNot() {
             if (this.userId === this.userInfo.id) {
-                this.updateComment();
+                this.showModal = true;
             } else {
                 console.log("수정 권한이 없습니다.");
             }
+        },
+        onUpdate(event) {
+            event.preventDefault();
+            this.updateComment();
             this.toggleReply();
         },
         updateComment() {
@@ -120,7 +123,7 @@ export default {
         },
         registReply() {
             let info = {
-                userId: this.userId,
+                userId: this.userInfo.id,
                 content: this.newReply,
                 parentId: this.id,
                 boardId: this.$route.params.articleno

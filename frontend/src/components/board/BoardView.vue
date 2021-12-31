@@ -77,6 +77,7 @@ export default {
     methods: {
         ...mapActions("boardStore", ["getOneArticle", "delArticle"]),
         ...mapActions("commentStore", ["getComments", "addComment"]),
+        ...mapActions("memberStore", ["getUserInfo"]),
         getComment() {
             this.getComments(this.$route.params.articleno);
         },
@@ -86,7 +87,7 @@ export default {
         },
         registComment() {
             let comment = {
-                userId: this.curUser,
+                userId: this.userInfo.id,
                 boardId: this.article.id,
                 content: this.newComment,
             };
@@ -94,14 +95,14 @@ export default {
             this.newComment = "";
         },
         goModify() {
-            if(this.article.userId === this.userInfo.id){
+            if (this.article.userId === this.userInfo.id) {
                 this.$router.push({
                     name: 'BoardModify',
                     params: {
                         articleno: this.article.id,
                     }
                 });
-            }else{
+            } else {
                 console.log("글 수정 권한이 없습니다.");
             }
         },
@@ -117,9 +118,9 @@ export default {
 
         //DELETE_ARTICLE
         removeArticle() {
-            if(this.userInfo.id === this.article.userId){
+            if (this.userInfo.id === this.article.userId) {
                 this.delArticle(this.$route.params.articleno);
-            }else{
+            } else {
                 console.log("글을 삭제할 수 없습니다.");
             }
             this.moveList();
@@ -133,7 +134,7 @@ export default {
     created() {
         this.getOneArticle(this.$route.params.articleno);
         this.getComment();
-        this.curUser = this.userInfo.id
+        this.curUser = this.userInfo.id;
     },
 
 }

@@ -9,7 +9,7 @@
     </div>
     <div class="options">
         <div class="option">
-            <button @click="toggleModal" class="modify_btn btn"><i class="fas fa-pen mm"></i></button>
+            <button @click.prevent="updateOrNot" class="modify_btn btn"><i class="fas fa-pen mm"></i></button>
             <form @submit="onUpdate">
                 <Modal v-if="showModal" @close="showModal = false">
                     <h3 slot="header" class="modal_header">
@@ -19,7 +19,7 @@
                     <input slot="body" type="text" v-model="rewrite" placeholder="new reply.." class="modal_body" />
                     <button slot="footer" type="submit" class="modal_footer">Update</button>
                 </Modal>
-            </form>
+            </form> 
         </div>
         <div class="option">
             <form @submit="onDelete">
@@ -33,6 +33,7 @@
 <script>
 import Modal from "./ModalComment.vue";
 import {
+    mapState,
     mapActions
 } from "vuex";
 export default {
@@ -52,18 +53,27 @@ export default {
             rewrite: "",
         }
     },
+    computed:{
+        ...mapState("memberStore", ["userInfo"]),
+    },
     methods: {
         ...mapActions("replyStore", ["modReply", "delReply"]),
 
         //UPDATE REPLY
+        updateOrNot(){
+            if(this.userId === this.userInfo.id){
+                this.showModal = true;
+            }else{
+                console.log("대댓글 수정 권한이 없습니다.");
+            }
+        },
         onUpdate(event) {
             event.preventDefault();
-            //현재 접속 중인 유저가 대댓글 작성자라면
             this.updateReply();
         },
         updateReply() {
             let reply = {
-                userId: this.userId,
+                userId: this.userInfo.id,
                 content: this.rewrite,
                 id: this.id,
                 boardId: this.boardId,
@@ -77,8 +87,11 @@ export default {
         //DELETE REPLY
         onDelete(event) {
             event.preventDefault();
-            //현재 접속 중인 유저가 댓글 작성자라면
+            if(this.userId === this.userInfo.id){
             this.removeReply();
+            }else{
+                console.log("대댓글 삭제 권한이 없습니다.");
+            }
         },
         removeReply() {
             let reply = {
