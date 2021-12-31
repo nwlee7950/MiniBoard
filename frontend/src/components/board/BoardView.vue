@@ -63,6 +63,7 @@ export default {
     computed: {
         ...mapState("boardStore", ["article"]),
         ...mapState("commentStore", ["comments"]),
+        ...mapState("memberStore", ["userInfo"]),
         rows() {
             return this.comments.length;
         },
@@ -107,13 +108,16 @@ export default {
         },
         onSubmit(event) {
             event.preventDefault();
-            //현재 접속 중인 유저가 글 작성자라면
             this.removeArticle();
         },
 
         //DELETE_ARTICLE
         removeArticle() {
-            this.delArticle(this.$route.params.articleno);
+            if(this.userInfo.id === this.article.userId){
+                this.delArticle(this.$route.params.articleno);
+            }else{
+                console.log("글을 삭제할 수 없습니다.");
+            }
             this.moveList();
         },
         moveList() {

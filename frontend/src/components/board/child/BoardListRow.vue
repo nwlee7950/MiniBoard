@@ -1,6 +1,6 @@
 <template>
 <tr class="tr">
-    <td>{{id}}</td>
+    <td>{{area}}</td>
     <td @click="goDetail" class="title">{{title}}</td>
     <td>{{userId}}</td>
     <td>{{date}}</td>
@@ -12,7 +12,14 @@
 export default {
     data(){
         return{
+            "area":String,
         }
+    },
+    created(){
+        if(this.userId === "admin")
+            this.area = "공지"
+        else
+            this.area = "일반"
     },
     methods: {
         goDetail() {

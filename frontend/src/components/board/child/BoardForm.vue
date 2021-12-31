@@ -1,7 +1,7 @@
 <template>
 <div id="form" class="container">
     <form @submit="onSubmit" @reset="onReset">
-        <div class="form">
+        <div class="form" v-if="this.type === 'register'">
             <label for="userId">작성자</label>
             <input type="text" name="userId" v-model="userInfo.id" disabled>
             <label for="title">제목</label>
@@ -9,9 +9,15 @@
             <label for="content">내용</label>
             <textarea name="content" class="content_box" v-model="article.content" ref="content"></textarea>
         </div>
+        <div class="form" v-else>
+            <label for="userId">작성자</label>
+            <input type="text" name="userId" v-model="article.userId" disabled>
+            <label for="title">제목</label>
+            <input type="text" name="title" v-model="article.title" ref="title">
+            <label for="content">내용</label>
+            <textarea name="content" class="content_box" v-model="article.content" ref="content"></textarea>
+        </div>
         <div class="btn_box">
-            <label for="notice">공지</label>
-            <input type="checkbox" name="notice" v-model="article.notice">
             <button type="submit" class="submit_btn" v-if="this.type === 'register'">Register</button>
             <button type="submit" class="submit_btn" v-else>Update</button>
             <button type="reset" @click="moveList">Back</button>
@@ -22,10 +28,11 @@
 
 <script>
 import {
-    mapState, mapActions
+    mapState,
+    mapActions
 } from "vuex";
 export default {
-    computed:{
+    computed: {
         ...mapState("boardStore", ["article"]),
         ...mapState("memberStore", ["userInfo"]),
     },
@@ -63,24 +70,36 @@ export default {
 
         //CREATE_ARTICLE
         registArticle() {
+            let notice = false;
+            if(this.userInfo.role === "ADMIN"){
+                notice = true;
+            }
             let article = {
                 userId: this.userInfo.id,
                 title: this.article.title,
                 content: this.article.content,
-                notice: this.article.notice,
+                notice: notice,
             }
             this.addArticle(article);
             this.moveList();
         },
         updateArticle() {
+            let notice = false;
+            if(this.userInfo.role === "ADMIN"){
+                notice = true;
+            }
             let article = {
-                userId: this.userInfo.id,
+                userId: this.article.userId,
                 title: this.article.title,
                 content: this.article.content,
-                notice: this.article.notice,
+                notice: notice,
                 id: this.article.id,
             };
-            this.modArticle(article);
+            if (this.userInfo.id === this.article.userId){
+                this.modArticle(article);
+            } else {
+                console.log("수정이 불가합니다.");
+            }
             this.moveList();
         },
         moveList() {

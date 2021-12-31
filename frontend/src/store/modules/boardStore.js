@@ -35,8 +35,8 @@ const boardStore = {
     getAllArticles({ commit }, options) {
       listArticle(
         options,
-        (response) => {
-          commit("SET_ALL_ARTICLES", response.data);
+        (res) => {
+          commit("SET_ALL_ARTICLES", res.data);
         },
         (error) => {
           console.log(error);
@@ -46,10 +46,10 @@ const boardStore = {
     getOneArticle({ commit }, boardId) {
       getArticle(
         boardId,
-        (response) => {
+        (res) => {
           let msg = "해당 글 불러오기 성공!!";
           console.log(msg);
-          commit("SET_CURRENT_ARTICLE", response.data);
+          commit("SET_CURRENT_ARTICLE", res.data);
         },
         (error) => {
           console.log("에러발생!!", error);
@@ -59,10 +59,11 @@ const boardStore = {
     addArticle({ commit }, article) {
       writeArticle(
         article,
-        () => {
+        (res) => {
           let msg = "글 등록이 완료되었습니다.";
           console.log(msg);
-          commit("SUCCESS", msg);
+          console.log(res);
+          commit("SET_MSG", msg);
         },
         (error) => {
           console.log(error);
@@ -72,10 +73,11 @@ const boardStore = {
     modArticle({ commit }, article) {
       modifyArticle(
         article,
-        () => {
+        (res) => {
           let msg = "글 수정이 완료되었습니다.";
           console.log(msg);
-          commit("SUCCESS", msg);
+          console.log(res);
+          commit("SET_MSG", msg);
         },
         (error) => {
           console.log(error);
@@ -85,10 +87,11 @@ const boardStore = {
     delArticle({ commit }, boardId) {
       deleteArticle(
         boardId,
-        () => {
+        (res) => {
           let msg = "글 삭제가 완료되었습니다.";
           console.log(msg);
-          commit("SUCCESS", msg);
+          console.log(res);
+          commit("SET_MSG", msg);
         },
         (error) => {
           console.log(error);

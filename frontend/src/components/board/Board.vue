@@ -17,7 +17,7 @@
             <table>
                 <thead>
                     <tr class="thead">
-                        <th>번호</th>
+                        <th>분류</th>
                         <th class="table_title">제목</th>
                         <th>작성자</th>
                         <th>작성일</th>
