@@ -5,7 +5,9 @@
             <strong class="bold">Mini Board,</strong><br>
             Share yours and take other's
         </p>
-        <router-link :to="{name:'MemberForm'}" class="move_join">Join Mini Board</router-link>
+        <div class="joinLink">
+        <router-link :to="{name:'Join'}" class="move_join" v-if="logout">Join Mini Board</router-link>
+        </div>
         <button type="button" class="move_board" @click="move_board">Go to the Board</button>
     </div>
     <div class="icons">
@@ -23,12 +25,24 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     name: 'Home',
+    data(){
+        return{
+            "logout":true,
+        }
+    },
+    computed:{
+        ...mapState("memberStore", ["isLogin"]),
+    },
     methods:{
         move_board(){
-            this.$router.push({name:'Main'})
+            this.$router.push({name:'Main'});
         }
+    },
+    created(){
+        this.logout = !this.isLogin;
     }
 }
 </script>
@@ -51,6 +65,7 @@ export default {
 
 .title {
     font-size: 40px;
+    margin-bottom: 150px;
 }
 .bold{
     font-size: 65px;
@@ -90,5 +105,10 @@ export default {
 img {
     width: 100%;
     height: 100%;
+}
+
+.joinLink{
+    margin-bottom: 20px;
+    font-size: 30px;
 }
 </style>
