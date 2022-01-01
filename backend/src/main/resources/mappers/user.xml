@@ -39,4 +39,10 @@
         select *
         from user
     </select>
+
+    <select id="getFileName" parameterType="String" resultType="String">
+        select profile_image
+        from user
+        where id = #{id}
+    </select>
 </mapper>

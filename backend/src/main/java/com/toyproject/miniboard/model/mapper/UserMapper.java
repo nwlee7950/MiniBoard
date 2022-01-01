@@ -12,4 +12,5 @@ public interface UserMapper {
     public void deleteUser(String id);
     public User selectByUserId(String id);
     public List<User> userList();
+    public String getFileName(String id);
 }

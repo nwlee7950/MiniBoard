@@ -23,6 +23,7 @@ import java.util.UUID;
 public class UserServiceImpl implements  UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final String separ = File.separator;
 
     @Override
     @Transactional
@@ -31,7 +32,6 @@ public class UserServiceImpl implements  UserService {
             throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
         }
 
-        String separ = File.separator;
         File file = new File("");
 
         String rootPath = file.getAbsolutePath().split("backend")[0];
@@ -74,8 +74,6 @@ public class UserServiceImpl implements  UserService {
     @Override
     @Transactional
     public void updateUser(UserDto userDto, MultipartFile multipartFile) throws Exception{
-        String separ = File.separator;
-
         File file = new File("");
         String rootPath = file.getAbsolutePath().split("backend")[0];
         String savePath = rootPath + separ + "frontend" + separ + "src" + separ + "assets" + separ + "profileImg";
@@ -107,6 +105,17 @@ public class UserServiceImpl implements  UserService {
 
     @Override
     public void deleteUser(String id) {
+        File file = new File("");
+        String rootPath = file.getAbsolutePath().split("backend")[0];
+        String savePath = rootPath + separ + "frontend" + separ + "src" + separ + "assets" + separ + "profileImg";
+        String FileName = userMapper.getFileName(id);
+
+        File originFile = new File(savePath + separ + FileName);
+
+        if(originFile.exists()){
+            originFile.delete();
+            log.info("프로필 사진 삭제");
+        }
         userMapper.deleteUser(id);
     }
 
