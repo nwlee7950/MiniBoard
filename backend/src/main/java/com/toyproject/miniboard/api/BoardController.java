@@ -36,7 +36,7 @@ public class BoardController {
     @ApiOperation(value = "게시글을 삭제한다.", response = String.class)
     @DeleteMapping("/{id}")
     public ResponseEntity<Board> deleteBoard(@PathVariable @ApiParam(value = "삭제할 글 번호", required = true) long id) throws Exception {
-        log.info("delete board");
+        log.debug("delete board");
         boardService.deleteBoard(id);
         return new ResponseEntity<Board>(HttpStatus.OK);
     }
@@ -44,7 +44,7 @@ public class BoardController {
     @ApiOperation(value = "게시글을 수정한다.", response = String.class)
     @PutMapping
     public ResponseEntity<String> updateBoard(@Valid @RequestBody @ApiParam(value = "수정할 글 정보", required = true) BoardDto boardDto) throws Exception{
-        log.debug("update Board:{}",boardDto);
+        log.info("update Board : {}",boardDto);
         boardService.updateBoard(boardDto);
         return new ResponseEntity<String>(HttpStatus.OK);
     }
@@ -59,6 +59,7 @@ public class BoardController {
     @ApiOperation(value="게시글번호에 맞는 게시글을 반환한다.",response= Board.class)
     @GetMapping("/{id}")
     public ResponseEntity<Board> getBoard(@PathVariable @ApiParam(value = "조회할 글 번호", required = true) long id){
+        log.debug("get Board called");
         return new ResponseEntity<Board>(boardService.getBoard(id),HttpStatus.OK);
     }
 }

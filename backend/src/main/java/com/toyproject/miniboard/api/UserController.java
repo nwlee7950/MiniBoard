@@ -59,7 +59,7 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         //해당 인증 정보를 기반으로 jwt 토큰을 생성
         String jwt = tokenProvider.createToken(authentication);
-        log.debug("로그인 토큰정보 : {}", jwt);
+        log.info("로그인 토큰정보 : {}", jwt);
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
@@ -70,9 +70,9 @@ public class UserController {
 
     @ApiOperation(value = "회원 정보를 수정한다.", response = String.class)
     @PutMapping()
-    public ResponseEntity<String> updateUser(@Valid @RequestPart(value = "userDto") @ApiParam(value = "수정할 회원 정보", required = true)UserDto userDto,
+    public ResponseEntity<String> updateUser(@Valid @RequestPart(value = "userDto") @ApiParam(value = "수정할 회원 정보", required = true) UserDto userDto,
                                              @RequestPart(value = "file", required = false) @ApiParam(value = "프로필 사진") MultipartFile multipartFile) throws Exception{
-        log.debug("update user : {}", userDto);
+        log.info("update user : {}", userDto);
         userService.updateUser(userDto, multipartFile);
         return new ResponseEntity<String>(HttpStatus.OK);
     }
@@ -80,7 +80,7 @@ public class UserController {
     @ApiOperation(value = "회원 탈퇴", response = String.class)
     @DeleteMapping("/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable @ApiParam(value = "삭제할 유저 ID", required = true) String id) throws Exception {
-        log.info("delete user");
+        log.debug("delete user");
         userService.deleteUser(id);
         return new ResponseEntity<User>(HttpStatus.OK);
     }
@@ -88,13 +88,14 @@ public class UserController {
     @ApiOperation(value="회원 한 명의 정보를 반환한다.",response= User.class)
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable @ApiParam(value = "조회할 회원의 ID", required = true) String id){
+        log.debug("get User called");
         return new ResponseEntity<User>(userService.selectByUserId(id),HttpStatus.OK);
     }
 
     @ApiOperation(value = "회원 목록을 반환한다.", response = List.class)
     @GetMapping
-    public ResponseEntity<List<User>> userList() throws  Exception{
-        log.info("user List");
+    public ResponseEntity<List<User>> userList() throws Exception{
+        log.debug("user List called");
         return new ResponseEntity<List<User>>(userService.userList(), HttpStatus.OK);
     }
 }

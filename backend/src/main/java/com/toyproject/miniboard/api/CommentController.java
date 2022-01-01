@@ -35,7 +35,7 @@ public class CommentController {
     @ApiOperation(value = "댓글을 수정한다.", response = String.class)
     @PutMapping
     public ResponseEntity<String> updateComment(@Valid @RequestBody @ApiParam(value = "수정할 댓글 정보", required = true) CommentDto commentDto) throws Exception {
-        log.debug("update Comment : {}",commentDto);
+        log.info("update Comment : {}",commentDto);
         commentService.updateComment(commentDto);
         return new ResponseEntity<String>(HttpStatus.OK);
     }
@@ -44,7 +44,7 @@ public class CommentController {
     @ApiOperation(value = "댓글을 삭제한다.", response = String.class)
     @DeleteMapping("/{id}")
     public ResponseEntity<CommentDto> deleteComment(@PathVariable @ApiParam(value = "삭제할 댓글 번호", required = true) int id) throws Exception {
-        log.info("delete Comment");
+        log.debug("delete Comment called");
         commentService.deleteComment(id);
         return new ResponseEntity<CommentDto>(HttpStatus.OK);
     }
@@ -52,7 +52,7 @@ public class CommentController {
     @ApiOperation(value = "댓글 목록을 반환한다.", response = List.class)
     @GetMapping("/{boardId}")
     public ResponseEntity<List<Comment>> commentList(@PathVariable @ApiParam(value = "글 번호", required = true) long boardId) throws Exception {
-        log.info("comment List called");
+        log.debug("comment List called");
         return new ResponseEntity<List<Comment>>(commentService.commentList(boardId), HttpStatus.OK);
     }
 }

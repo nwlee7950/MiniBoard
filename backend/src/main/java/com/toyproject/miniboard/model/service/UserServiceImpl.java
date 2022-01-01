@@ -33,7 +33,6 @@ public class UserServiceImpl implements  UserService {
         }
 
         File file = new File("");
-
         String rootPath = file.getAbsolutePath().split("backend")[0];
         String savePath = rootPath + separ + "frontend" + separ + "src" + separ + "assets" + separ + "profileImg";
 
@@ -46,8 +45,8 @@ public class UserServiceImpl implements  UserService {
         }
         String originFileName = multipartFile.getOriginalFilename();
         String saveFileName = UUID.randomUUID().toString() + originFileName.substring(originFileName.lastIndexOf("."));
-
         String filePath = savePath + separ + saveFileName;
+
         multipartFile.transferTo(new File(filePath));
 
         if(userRegisterDto.getId().equals("admin")){
@@ -77,7 +76,6 @@ public class UserServiceImpl implements  UserService {
         File file = new File("");
         String rootPath = file.getAbsolutePath().split("backend")[0];
         String savePath = rootPath + separ + "frontend" + separ + "src" + separ + "assets" + separ + "profileImg";
-
         File originFile = new File(savePath + separ + userDto.getProfileImage());
 
         if(originFile.exists()){
@@ -87,8 +85,8 @@ public class UserServiceImpl implements  UserService {
 
         String originFileName = multipartFile.getOriginalFilename();
         String saveFileName = UUID.randomUUID().toString() + originFileName.substring(originFileName.lastIndexOf("."));
-
         String filePath = savePath + separ + saveFileName;
+
         multipartFile.transferTo(new File(filePath));
 
         userDto.setProfileImage(saveFileName);
@@ -109,7 +107,6 @@ public class UserServiceImpl implements  UserService {
         String rootPath = file.getAbsolutePath().split("backend")[0];
         String savePath = rootPath + separ + "frontend" + separ + "src" + separ + "assets" + separ + "profileImg";
         String FileName = userMapper.getFileName(id);
-
         File originFile = new File(savePath + separ + FileName);
 
         if(originFile.exists()){
