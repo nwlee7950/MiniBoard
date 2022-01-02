@@ -8,6 +8,7 @@ import com.toyproject.miniboard.model.vo.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.javassist.bytecode.DuplicateMemberException;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +45,10 @@ public class UserServiceImpl implements  UserService {
             }
         }
         String originFileName = multipartFile.getOriginalFilename();
+        String extension = originFileName.substring(originFileName.length()-3);
+        if(!(extension.equals("jpg") || extension.equals("png"))){
+            throw new FileUploadException("파일 확장자가 jpg나 png가 아닙니다.");
+        }
         String saveFileName = UUID.randomUUID().toString() + originFileName.substring(originFileName.lastIndexOf("."));
         String filePath = savePath + separ + saveFileName;
 
@@ -84,6 +89,10 @@ public class UserServiceImpl implements  UserService {
         }
 
         String originFileName = multipartFile.getOriginalFilename();
+        String extension = originFileName.substring(originFileName.length()-3);
+        if(!(extension.equals("jpg") || extension.equals("png"))){
+            throw new FileUploadException("파일 확장자가 jpg나 png가 아닙니다.");
+        }
         String saveFileName = UUID.randomUUID().toString() + originFileName.substring(originFileName.lastIndexOf("."));
         String filePath = savePath + separ + saveFileName;
 
